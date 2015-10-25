@@ -1,0 +1,6 @@
+cd /data/script/
+svn up > svn_update.out
+n=$(cat svn_update.out | wc -l)
+if [ "${n}" -gt 1 ]; then
+    sh update.sh
+fi

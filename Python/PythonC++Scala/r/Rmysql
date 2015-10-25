@@ -1,0 +1,121 @@
+# 建表并插入数据
+> t_demo<-data.frame(
+  a=seq(1:10),
+  b=letters[1:10],
+  c=rnorm(10)
+)
+> dbWriteTable(conn, "t_demo", t_demo)
+
+# 获得整个表数据
+> dbReadTable(conn, "t_demo")
+    a b           c
+1   1 a  0.98868164
+2   2 b -0.66935770
+3   3 c  0.27703638
+4   4 d  1.36137156
+5   5 e -0.70291017
+6   6 f  1.61235088
+7   7 g  0.17616068
+8   8 h  0.29700017
+9   9 i  0.19032719
+10 10 j -0.06222173
+
+# 插入新数据
+> dbWriteTable(conn, "t_demo", t_demo, append=TRUE)
+> dbReadTable(conn, "t_demo")
+   row_names  a b           c
+1          1  1 a  0.98868164
+2          2  2 b -0.66935770
+3          3  3 c  0.27703638
+4          4  4 d  1.36137156
+5          5  5 e -0.70291017
+6          6  6 f  1.61235088
+7          7  7 g  0.17616068
+8          8  8 h  0.29700017
+9          9  9 i  0.19032719
+10        10 10 j -0.06222173
+11         1  1 a  0.98868164
+12         2  2 b -0.66935770
+13         3  3 c  0.27703638
+14         4  4 d  1.36137156
+15         5  5 e -0.70291017
+16         6  6 f  1.61235088
+17         7  7 g  0.17616068
+18         8  8 h  0.29700017
+19         9  9 i  0.19032719
+20        10 10 j -0.06222173
+
+# 覆盖原表数据
+> dbWriteTable(conn, "t_demo", t_demo, overwrite=TRUE)
+
+# 1). 查询数据
+> d0 <- dbGetQuery(conn, "SELECT * FROM t_demo where c>0")
+> class(d0)
+[1] "data.frame"
+
+> d0
+  row_names a b         c
+1         1 1 a 0.9886816
+2         3 3 c 0.2770364
+3         4 4 d 1.3613716
+4         6 6 f 1.6123509
+5         7 7 g 0.1761607
+6         8 8 h 0.2970002
+7         9 9 i 0.1903272
+
+# 2). 执行SQL脚本查询，并分页
+> rs <- dbSendQuery(conn, "SELECT * FROM t_demo where c>0")
+> class(rs)
+[1] "MySQLResult"
+attr(,"package")
+[1] "RMySQL"
+> mysqlCloseResult(rs)
+[1] TRUE
+
+> d1 <- fetch(rs, n = 3)
+> d1
+  row_names a b         c
+1         1 1 a 0.9886816
+2         3 3 c 0.2770364
+3         4 4 d 1.3613716
+
+# 3). 查看集统计信息
+> summary(rs, verbose = TRUE)
+  row_names               a              b                   c         
+ Length:7           Min.   :1.000   Length:7           Min.   :0.1762  
+ Class :character   1st Qu.:3.500   Class :character   1st Qu.:0.2337  
+ Mode  :character   Median :6.000   Mode  :character   Median :0.2970  
+                    Mean   :5.429                      Mean   :0.7004  
+                    3rd Qu.:7.500                      3rd Qu.:1.1750  
+                    Max.   :9.000                      Max.   :1.6124
+
+# 不插入row.names字段
+> dbWriteTable(conn, "t_demo", t_demo,row.names=FALSE,overwrite=TRUE)
+> dbGetQuery(conn, "SELECT * FROM t_demo where c>0")
+  a b         c
+1 1 a 0.9886816
+2 3 c 0.2770364
+3 4 d 1.3613716
+4 6 f 1.6123509
+5 7 g 0.1761607
+6 8 h 0.2970002
+7 9 i 0.1903272
+
+# 删除表
+> if(dbExistsTable(conn,'t_demo')){
++     dbRemoveTable(conn, "t_demo")
++ }
+[1] TRUE
+
+执行SQL语句，dbSendQuery
+
+
+> query<-dbSendQuery(conn, "show tables")
+> data <- fetch(query, n = -1)
+> data
+  Tables_in_rmysql
+1           t_demo
+2           t_user
+> mysqlCloseResult(query)
+[1] TRUE
+

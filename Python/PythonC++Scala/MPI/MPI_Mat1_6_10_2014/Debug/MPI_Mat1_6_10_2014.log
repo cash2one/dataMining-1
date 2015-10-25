@@ -1,0 +1,16 @@
+﻿Build started 2014/9/5 0:32:36.
+     1>Project "G:\Python,php,js\MPI\MPI_Mat1_6_10_2014\MPI_Mat1_6_10_2014.vcxproj" on node 2 (Build target(s)).
+     1>Link:
+         H:\Program Files (x86)\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"G:\Python,php,js\MPI\Debug\MPI_Mat1_6_10_2014.exe" /INCREMENTAL /NOLOGO mpi.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"G:\Python,php,js\MPI\Debug\MPI_Mat1_6_10_2014.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"G:\Python,php,js\MPI\Debug\MPI_Mat1_6_10_2014.lib" /MACHINE:X86 Debug\MPI_Mat1_6_10_2014.obj
+         Debug\stdafx.obj
+     1>MPI_Mat1_6_10_2014.obj : error LNK2019: unresolved external symbol "void __cdecl MPI::Finalize(void)" (?Finalize@MPI@@YAXXZ) referenced in function _wmain
+     1>MPI_Mat1_6_10_2014.obj : error LNK2019: unresolved external symbol "void __cdecl MPI::Init(int &,char * * &)" (?Init@MPI@@YAXAAHAAPAPAD@Z) referenced in function _wmain
+     1>MPI_Mat1_6_10_2014.obj : error LNK2019: unresolved external symbol "double __cdecl MPI::Wtime(void)" (?Wtime@MPI@@YANXZ) referenced in function _wmain
+     1>MPI_Mat1_6_10_2014.obj : error LNK2001: unresolved external symbol "class MPI::Intracomm MPI::COMM_WORLD" (?COMM_WORLD@MPI@@3VIntracomm@1@A)
+     1>MPI_Mat1_6_10_2014.obj : error LNK2001: unresolved external symbol "class MPI::Datatype MPI::DOUBLE" (?DOUBLE@MPI@@3VDatatype@1@A)
+     1>G:\Python,php,js\MPI\Debug\MPI_Mat1_6_10_2014.exe : fatal error LNK1120: 5 unresolved externals
+     1>Done Building Project "G:\Python,php,js\MPI\MPI_Mat1_6_10_2014\MPI_Mat1_6_10_2014.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.35

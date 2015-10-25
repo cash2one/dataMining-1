@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>    
+<head>
+    <meta charset='utf-8'>
+    <title></title>    
+</head>
+<form method='GET' action=".">
+<input type="text" name="q">    
+<input type="submit" value="search">
+</form>
+{% if query %}
+<h2>{{query}}</h2>
+{% endif %}
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style type="text/css">
+    .left{
+        position: relative;
+        border-spacing: 0;
+        margin-left: 268px;
+        margin-top: 0;
+        float:left;
+    }
+    .right{
+        position: relative;
+        border-spacing: 0;
+        margin-left: 120px;
+        margin-top: 0;
+        float: left;
+    }
+    .table{
+        border: 1px solid #ccc;
+        border-spacing: 1;
+    }
+    .table td{
+        border-right: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        padding: 8px;
+    }
+    .table th{
+        border-right: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        padding: 8px;
+    }
+    </style>
+</head>
+<body>
+<center>    
+<div>错误率:{{errorRate}}</div>
+<br>
+<div>测试集合的类标</div>
+<div class="mid">
+    <table class="table">
+        <tbody>
+            <tr>
+                {% for i in labels %}
+                <td>{{i}}</td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+</div>
+</center>                
+<center>  
+<div class="left">
+    <caption>此数据集为鸢尾花的训练数据集</caption>
+    <table class='table'>
+        <tbody>
+            <tr>
+                <th>特征一</th>
+                <th>特征二</th>
+                <th>特征三</th>
+                <th>特征四</th>
+                <th>类标</th>
+            </tr>    
+            {% for item in trainData %}
+            <tr>
+            {% for i in item %}                       
+                <td>{{i}}</td>
+            {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table> 
+</div>               
+<div class="right">
+    <caption>此数据集为鸢尾花的训练数据集</caption>
+    <table class='table'>
+        <tbody>
+            <tr>
+                <th>特征一</th>
+                <th>特征二</th>
+                <th>特征三</th>
+                <th>特征四</th>
+                <th>类标</th>
+            </tr>    
+            {% for item in testData %}
+            <tr>
+                {% for i in item %}
+                <td>{{i}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table> 
+</div>                           
+{% load staticfiles %}
+<img src="{% static "figure_1.png" %}" class="image"/ value="主成分分析图">
+{{p}}
+{{a}}
+</center>
+</body>
+</html>

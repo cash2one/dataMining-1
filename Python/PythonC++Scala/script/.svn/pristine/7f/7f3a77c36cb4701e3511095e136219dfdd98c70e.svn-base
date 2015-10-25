@@ -1,0 +1,1712 @@
+mysql> show table status\G
+*************************** 1. row ***************************
+           Name: backuphost
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 0
+ Avg_row_length: 0
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: 3
+    Create_time: 2012-12-29 15:12:10
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 
+*************************** 2. row ***************************
+           Name: backupstatus
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 0
+ Avg_row_length: 0
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2012-12-29 15:12:10
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 
+*************************** 3. row ***************************
+           Name: backuptables
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 0
+ Avg_row_length: 0
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: 3
+    Create_time: 2012-12-29 15:12:12
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 
+*************************** 4. row ***************************
+           Name: history_topuser_rfmconfig
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 75
+ Avg_row_length: 218
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 16384
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2012-12-29 15:18:15
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 历史表——淘宝用户最后一次RFM计算表
+*************************** 5. row ***************************
+           Name: lib_cat_id
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 437
+ Avg_row_length: 112
+    Data_length: 49152
+Max_data_length: 0
+   Index_length: 16384
+      Data_free: 0
+ Auto_increment: 611
+    Create_time: 2012-12-07 01:44:40
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 知识库-类目ID表
+*************************** 6. row ***************************
+           Name: lib_cat_industry_keyword
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 551
+ Avg_row_length: 178
+    Data_length: 98304
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2012-12-25 16:00:57
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 知识库——行业类目-行业-关键词列表(校正版)
+*************************** 7. row ***************************
+           Name: lib_cat_industry_keyword_2
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 646
+ Avg_row_length: 152
+    Data_length: 98304
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2012-12-27 12:00:54
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 知识库——行业类目-行业-关键词列表(校正版2)
+*************************** 8. row ***************************
+           Name: lib_datelist
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 9648
+ Avg_row_length: 35
+    Data_length: 344064
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2012-12-05 11:39:13
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 
+*************************** 9. row ***************************
+           Name: lib_industry
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 85
+ Avg_row_length: 192
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 16384
+      Data_free: 134217728
+ Auto_increment: NULL
+    Create_time: 2012-11-03 02:15:40
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 知识库——行业表
+*************************** 10. row ***************************
+           Name: lib_industry_2
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 85
+ Avg_row_length: 192
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2012-12-09 20:46:14
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 知识库——类目行业表
+*************************** 11. row ***************************
+           Name: lib_industry_3
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 94
+ Avg_row_length: 174
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2012-12-27 00:28:53
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 知识库——类目行业表
+*************************** 12. row ***************************
+           Name: lib_numlist
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 131584
+ Avg_row_length: 35
+    Data_length: 4734976
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-05 11:40:52
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 
+*************************** 13. row ***************************
+           Name: lib_province_map
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 34
+ Avg_row_length: 481
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 49152
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2012-11-16 10:17:08
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 知识库-省份中英文对照表
+*************************** 14. row ***************************
+           Name: lib_rate_library
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 0
+ Avg_row_length: 0
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 16384
+      Data_free: 134217728
+ Auto_increment: NULL
+    Create_time: 2012-11-03 02:15:40
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 知识库-评论关键词得分表
+*************************** 15. row ***************************
+           Name: quota_compete_index
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 575
+ Avg_row_length: 85
+    Data_length: 49152
+Max_data_length: 0
+   Index_length: 16384
+      Data_free: 134217728
+ Auto_increment: NULL
+    Create_time: 2012-12-11 03:46:46
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 指数表-竞争指数(暂时弃用)
+*************************** 16. row ***************************
+           Name: quota_pct_keyword
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 109167
+ Avg_row_length: 118
+    Data_length: 12959744
+Max_data_length: 0
+   Index_length: 9420800
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-11-14 01:03:13
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 指数表-关键词客单价
+*************************** 17. row ***************************
+           Name: quota_rate_evaluate
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 0
+ Avg_row_length: 0
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 16384
+      Data_free: 134217728
+ Auto_increment: NULL
+    Create_time: 2012-11-03 02:15:40
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 计算结果表-评论得分评估表
+*************************** 18. row ***************************
+           Name: quota_ratescore_table
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 0
+ Avg_row_length: 0
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 49152
+      Data_free: 134217728
+ Auto_increment: NULL
+    Create_time: 2012-11-03 02:15:40
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表-关键词下商品评论得分
+*************************** 19. row ***************************
+           Name: quota_sale_index
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 120177
+ Avg_row_length: 118
+    Data_length: 14204928
+Max_data_length: 0
+   Index_length: 23674880
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-11-14 00:15:46
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 指数表-销售额
+*************************** 20. row ***************************
+           Name: quota_shop_credit
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 272936
+ Avg_row_length: 183
+    Data_length: 49987584
+Max_data_length: 0
+   Index_length: 98484224
+      Data_free: 6291456
+ Auto_increment: NULL
+    Create_time: 2012-11-15 16:18:42
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 指数表-店铺信用级别表
+*************************** 21. row ***************************
+           Name: quota_tradingtime_aly
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 2435539
+ Avg_row_length: 75
+    Data_length: 184516608
+Max_data_length: 0
+   Index_length: 320126976
+      Data_free: 7340032
+ Auto_increment: NULL
+    Create_time: 2012-11-14 00:42:03
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 指数表-交易时段结果表
+*************************** 22. row ***************************
+           Name: schedule_shop_monitor
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 139
+ Avg_row_length: 117
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 16384
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2013-01-14 18:40:11
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 任务表-店铺监控进度
+*************************** 23. row ***************************
+           Name: ststc_cat_dealprice
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 92552
+ Avg_row_length: 142
+    Data_length: 13156352
+Max_data_length: 0
+   Index_length: 11927552
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-11-07 11:53:05
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表——类目下商品的平均成交价
+*************************** 24. row ***************************
+           Name: ststc_cat_range_hotshops
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 2783789
+ Avg_row_length: 114
+    Data_length: 318472192
+Max_data_length: 0
+   Index_length: 725434368
+      Data_free: 6291456
+ Auto_increment: NULL
+    Create_time: 2012-12-02 05:18:05
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表——类目下时间区间内的热销店铺
+*************************** 25. row ***************************
+           Name: ststc_cat_shop_sales_detail
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 10816314
+ Avg_row_length: 150
+    Data_length: 1625161728
+Max_data_length: 0
+   Index_length: 2284830720
+      Data_free: 6291456
+ Auto_increment: NULL
+    Create_time: 2012-11-13 23:55:47
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表——类目&店铺销售统计表
+*************************** 26. row ***************************
+           Name: ststc_cat_site_dealprice
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 107412
+ Avg_row_length: 171
+    Data_length: 18382848
+Max_data_length: 0
+   Index_length: 16973824
+      Data_free: 6291456
+ Auto_increment: NULL
+    Create_time: 2012-12-13 17:02:42
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表——类目&店铺类型对应的平均成交价
+*************************** 27. row ***************************
+           Name: ststc_item_rate1
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 10003368
+ Avg_row_length: 95
+    Data_length: 954204160
+Max_data_length: 0
+   Index_length: 1993342976
+      Data_free: 5242880
+ Auto_increment: NULL
+    Create_time: 2012-11-06 17:41:52
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表-商品评价统计
+*************************** 28. row ***************************
+           Name: ststc_keyword_hot_items
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 68251
+ Avg_row_length: 100
+    Data_length: 6832128
+Max_data_length: 0
+   Index_length: 14123008
+      Data_free: 134217728
+ Auto_increment: NULL
+    Create_time: 2012-11-03 02:16:43
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表——关键词下热销商品列表
+*************************** 29. row ***************************
+           Name: ststc_keyword_reporter
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 33725
+ Avg_row_length: 202
+    Data_length: 6832128
+Max_data_length: 0
+   Index_length: 4767744
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-14 13:44:36
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 类目统计报表
+*************************** 30. row ***************************
+           Name: ststc_keyword_shop_pct
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 7503923
+ Avg_row_length: 197
+    Data_length: 1480589312
+Max_data_length: 0
+   Index_length: 1751121920
+      Data_free: 5242880
+ Auto_increment: NULL
+    Create_time: 2012-11-14 00:26:55
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表-关键词类目下店铺的客单价
+*************************** 31. row ***************************
+           Name: ststc_keyword_shop_pct_1
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 29072
+ Avg_row_length: 90
+    Data_length: 2637824
+Max_data_length: 0
+   Index_length: 6864896
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-22 16:14:45
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表-关键词类目下店铺的客单价
+*************************** 32. row ***************************
+           Name: ststc_keyword_shop_pct_10
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 40538
+ Avg_row_length: 90
+    Data_length: 3686400
+Max_data_length: 0
+   Index_length: 8962048
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-22 18:43:28
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表-关键词类目下店铺的客单价
+*************************** 33. row ***************************
+           Name: ststc_keyword_shop_pct_11
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 41656
+ Avg_row_length: 113
+    Data_length: 4734976
+Max_data_length: 0
+   Index_length: 11059200
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-22 08:31:59
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表-关键词类目下店铺的客单价
+*************************** 34. row ***************************
+           Name: ststc_keyword_shop_pct_12
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 37855
+ Avg_row_length: 97
+    Data_length: 3686400
+Max_data_length: 0
+   Index_length: 7913472
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-22 08:52:49
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表-关键词类目下店铺的客单价
+*************************** 35. row ***************************
+           Name: ststc_keyword_shop_pct_13
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 34989
+ Avg_row_length: 105
+    Data_length: 3686400
+Max_data_length: 0
+   Index_length: 7913472
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-22 09:06:39
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表-关键词类目下店铺的客单价
+*************************** 36. row ***************************
+           Name: ststc_keyword_shop_pct_14
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 34364
+ Avg_row_length: 107
+    Data_length: 3686400
+Max_data_length: 0
+   Index_length: 7913472
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-22 09:13:59
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表-关键词类目下店铺的客单价
+*************************** 37. row ***************************
+           Name: ststc_keyword_shop_pct_15
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 21
+ Avg_row_length: 780
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 49152
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2012-12-22 09:19:08
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表-关键词类目下店铺的客单价
+*************************** 38. row ***************************
+           Name: ststc_keyword_shop_pct_2
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 97382
+ Avg_row_length: 81
+    Data_length: 7913472
+Max_data_length: 0
+   Index_length: 17350656
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-22 17:32:00
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表-关键词类目下店铺的客单价
+*************************** 39. row ***************************
+           Name: ststc_keyword_shop_pct_6
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 36818
+ Avg_row_length: 100
+    Data_length: 3686400
+Max_data_length: 0
+   Index_length: 7913472
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-22 16:14:59
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表-关键词类目下店铺的客单价
+*************************** 40. row ***************************
+           Name: ststc_keyword_shop_pct_7
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 40960
+ Avg_row_length: 90
+    Data_length: 3686400
+Max_data_length: 0
+   Index_length: 8962048
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-22 17:32:31
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表-关键词类目下店铺的客单价
+*************************** 41. row ***************************
+           Name: ststc_keyword_shop_pct_8
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 37213
+ Avg_row_length: 99
+    Data_length: 3686400
+Max_data_length: 0
+   Index_length: 7913472
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-22 17:45:18
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表-关键词类目下店铺的客单价
+*************************** 42. row ***************************
+           Name: ststc_keyword_shop_pct_9
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 37802
+ Avg_row_length: 97
+    Data_length: 3686400
+Max_data_length: 0
+   Index_length: 7913472
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-22 18:12:47
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表-关键词类目下店铺的客单价
+*************************** 43. row ***************************
+           Name: ststc_price_keyword
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 10803
+ Avg_row_length: 147
+    Data_length: 1589248
+Max_data_length: 0
+   Index_length: 638976
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-11-14 00:07:50
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表-关键词下价格统计信息
+*************************** 44. row ***************************
+           Name: ststc_shop_apriori
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 31106
+ Avg_row_length: 185
+    Data_length: 5783552
+Max_data_length: 0
+   Index_length: 14237696
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-20 16:23:55
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表——店铺的关联搭配计算结果
+*************************** 45. row ***************************
+           Name: ststc_shop_credit
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 0
+ Avg_row_length: 0
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 49152
+      Data_free: 134217728
+ Auto_increment: NULL
+    Create_time: 2012-11-03 02:16:43
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表-店铺信用级别表
+*************************** 46. row ***************************
+           Name: ststc_shop_monitor_reporter
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 259
+ Avg_row_length: 253
+    Data_length: 65536
+Max_data_length: 0
+   Index_length: 81920
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2013-01-11 10:48:34
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 店铺概况报表
+*************************** 47. row ***************************
+           Name: ststc_shop_multi_buyer
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 0
+ Avg_row_length: 0
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 16384
+      Data_free: 134217728
+ Auto_increment: NULL
+    Create_time: 2012-11-03 02:16:44
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表-店铺内组合买家购买列表
+*************************** 48. row ***************************
+           Name: ststc_shop_overview
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 0
+ Avg_row_length: 0
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 81920
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2013-01-09 17:53:56
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 店铺所有商品基本数据
+*************************** 49. row ***************************
+           Name: ststc_shop_pct_nokeyword
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 411440
+ Avg_row_length: 141
+    Data_length: 58327040
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 5242880
+ Auto_increment: NULL
+    Create_time: 2012-12-10 19:10:07
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 客单价店铺统计表，不具有关键词信息
+*************************** 50. row ***************************
+           Name: ststc_shop_recommend_items
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 0
+ Avg_row_length: 0
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 16384
+      Data_free: 134217728
+ Auto_increment: NULL
+    Create_time: 2012-11-03 02:16:44
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表-关联推荐结果表
+*************************** 51. row ***************************
+           Name: ststc_shop_sale_in
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 2394678
+ Avg_row_length: 164
+    Data_length: 394264576
+Max_data_length: 0
+   Index_length: 375242752
+      Data_free: 6291456
+ Auto_increment: NULL
+    Create_time: 2012-11-15 13:52:55
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表——店铺每日销售数据(商品为监控列表中的商品)
+*************************** 52. row ***************************
+           Name: ststc_shop_sales_keyword
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 8777794
+ Avg_row_length: 138
+    Data_length: 1217380352
+Max_data_length: 0
+   Index_length: 1512046592
+      Data_free: 7340032
+ Auto_increment: NULL
+    Create_time: 2012-11-14 00:10:08
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 统计表-关键词下店铺每日销售数据
+*************************** 53. row ***************************
+           Name: ststc_ztc_shops
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 3865
+ Avg_row_length: 72
+    Data_length: 278528
+Max_data_length: 0
+   Index_length: 278528
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2012-12-21 15:32:59
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 淘宝商品表
+*************************** 54. row ***************************
+           Name: top_cat_items
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 324578
+ Avg_row_length: 107
+    Data_length: 35012608
+Max_data_length: 0
+   Index_length: 65257472
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-13 13:43:59
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 类目下商品列表
+*************************** 55. row ***************************
+           Name: top_cat_search_result
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 412998
+ Avg_row_length: 400
+    Data_length: 165429248
+Max_data_length: 0
+   Index_length: 111493120
+      Data_free: 9437184
+ Auto_increment: NULL
+    Create_time: 2012-12-12 22:54:33
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 淘宝商品搜索结果表
+*************************** 56. row ***************************
+           Name: top_item1
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 308592
+ Avg_row_length: 507
+    Data_length: 156549120
+Max_data_length: 0
+   Index_length: 104185856
+      Data_free: 5242880
+ Auto_increment: NULL
+    Create_time: 2012-11-06 16:36:52
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 商品表1
+*************************** 57. row ***************************
+           Name: top_item2
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 12463228
+ Avg_row_length: 189
+    Data_length: 2357198848
+Max_data_length: 0
+   Index_length: 2019557376
+      Data_free: 6291456
+ Auto_increment: NULL
+    Create_time: 2012-12-11 11:55:35
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 商品表2（统计表）
+*************************** 58. row ***************************
+           Name: top_item2_1
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 31419
+ Avg_row_length: 117
+    Data_length: 3686400
+Max_data_length: 0
+   Index_length: 7405568
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-22 05:29:09
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 商品表2（统计表）
+*************************** 59. row ***************************
+           Name: top_item2_10
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 48388
+ Avg_row_length: 97
+    Data_length: 4734976
+Max_data_length: 0
+   Index_length: 9502720
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-22 05:48:26
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 商品表2（统计表）
+*************************** 60. row ***************************
+           Name: top_item2_11
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 47443
+ Avg_row_length: 99
+    Data_length: 4734976
+Max_data_length: 0
+   Index_length: 9502720
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-22 07:21:03
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 商品表2（统计表）
+*************************** 61. row ***************************
+           Name: top_item2_12
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 43851
+ Avg_row_length: 107
+    Data_length: 4734976
+Max_data_length: 0
+   Index_length: 8454144
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-22 07:25:10
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 商品表2（统计表）
+*************************** 62. row ***************************
+           Name: top_item2_13
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 39530
+ Avg_row_length: 93
+    Data_length: 3686400
+Max_data_length: 0
+   Index_length: 8454144
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-22 07:26:55
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 商品表2（统计表）
+*************************** 63. row ***************************
+           Name: top_item2_14
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 35346
+ Avg_row_length: 104
+    Data_length: 3686400
+Max_data_length: 0
+   Index_length: 8454144
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-22 07:28:57
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 商品表2（统计表）
+*************************** 64. row ***************************
+           Name: top_item2_15
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 23
+ Avg_row_length: 712
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 65536
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2012-12-22 07:31:12
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 商品表2（统计表）
+*************************** 65. row ***************************
+           Name: top_item2_2
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 109800
+ Avg_row_length: 90
+    Data_length: 9977856
+Max_data_length: 0
+   Index_length: 18939904
+      Data_free: 5242880
+ Auto_increment: NULL
+    Create_time: 2012-12-22 05:29:28
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 商品表2（统计表）
+*************************** 66. row ***************************
+           Name: top_item2_3
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 38420
+ Avg_row_length: 95
+    Data_length: 3686400
+Max_data_length: 0
+   Index_length: 8454144
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-22 05:29:37
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 商品表2（统计表）
+*************************** 67. row ***************************
+           Name: top_item2_4
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 47062
+ Avg_row_length: 100
+    Data_length: 4734976
+Max_data_length: 0
+   Index_length: 8454144
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-22 05:29:47
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 商品表2（统计表）
+*************************** 68. row ***************************
+           Name: top_item2_5
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 45223
+ Avg_row_length: 104
+    Data_length: 4734976
+Max_data_length: 0
+   Index_length: 8454144
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-22 05:29:56
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 商品表2（统计表）
+*************************** 69. row ***************************
+           Name: top_item2_6
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 42711
+ Avg_row_length: 110
+    Data_length: 4734976
+Max_data_length: 0
+   Index_length: 8454144
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-22 05:30:41
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 商品表2（统计表）
+*************************** 70. row ***************************
+           Name: top_item2_7
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 46242
+ Avg_row_length: 102
+    Data_length: 4734976
+Max_data_length: 0
+   Index_length: 9502720
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-22 05:40:31
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 商品表2（统计表）
+*************************** 71. row ***************************
+           Name: top_item2_8
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 41993
+ Avg_row_length: 87
+    Data_length: 3686400
+Max_data_length: 0
+   Index_length: 8454144
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-22 05:45:10
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 商品表2（统计表）
+*************************** 72. row ***************************
+           Name: top_item2_9
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 45174
+ Avg_row_length: 104
+    Data_length: 4734976
+Max_data_length: 0
+   Index_length: 9502720
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-22 05:46:50
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 商品表2（统计表）
+*************************** 73. row ***************************
+           Name: top_item3
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 331965
+ Avg_row_length: 1566
+    Data_length: 519995392
+Max_data_length: 0
+   Index_length: 11845632
+      Data_free: 7340032
+ Auto_increment: NULL
+    Create_time: 2012-12-18 15:41:58
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 商品表3——商品额外字段
+*************************** 74. row ***************************
+           Name: top_item4
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 226564
+ Avg_row_length: 435
+    Data_length: 98762752
+Max_data_length: 0
+   Index_length: 78839808
+      Data_free: 36700160
+ Auto_increment: NULL
+    Create_time: 2013-01-15 16:46:37
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 商品属性表4(动态)
+*************************** 75. row ***************************
+           Name: top_item_buyer
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 2131825
+ Avg_row_length: 91
+    Data_length: 194740224
+Max_data_length: 0
+   Index_length: 270303232
+      Data_free: 134217728
+ Auto_increment: NULL
+    Create_time: 2012-11-03 02:16:58
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 商品买家列表
+*************************** 76. row ***************************
+           Name: top_item_tradingtime
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 63573822
+ Avg_row_length: 95
+    Data_length: 6083575808
+Max_data_length: 0
+   Index_length: 10679074816
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-11-25 02:10:10
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 商品表-交易时段表
+*************************** 77. row ***************************
+           Name: top_itemsearchresult
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 5117574
+ Avg_row_length: 302
+    Data_length: 1550254080
+Max_data_length: 0
+   Index_length: 531759104
+      Data_free: 134217728
+ Auto_increment: NULL
+    Create_time: 2012-11-03 02:18:36
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 淘宝商品搜索结果表
+*************************** 78. row ***************************
+           Name: top_shop1
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 124722
+ Avg_row_length: 206
+    Data_length: 25739264
+Max_data_length: 0
+   Index_length: 43171840
+      Data_free: 7340032
+ Auto_increment: NULL
+    Create_time: 2013-01-17 16:45:58
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 淘宝店铺表1
+*************************** 79. row ***************************
+           Name: top_shop2
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 24019
+ Avg_row_length: 109
+    Data_length: 2637824
+Max_data_length: 0
+   Index_length: 3014656
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2013-01-15 16:08:13
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 基础表-店铺动态数据
+*************************** 80. row ***************************
+           Name: top_tiny_shop
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 52617
+ Avg_row_length: 70
+    Data_length: 3686400
+Max_data_length: 0
+   Index_length: 3686400
+      Data_free: 4194304
+ Auto_increment: NULL
+    Create_time: 2012-12-05 18:59:17
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 简单的店铺表，可能数据不全
+*************************** 81. row ***************************
+           Name: top_user
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 0
+ Avg_row_length: 0
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 65536
+      Data_free: 134217728
+ Auto_increment: NULL
+    Create_time: 2012-11-03 02:18:38
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 淘宝用户表
+*************************** 82. row ***************************
+           Name: top_ztc_sum
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 7019
+ Avg_row_length: 221
+    Data_length: 1556480
+Max_data_length: 0
+   Index_length: 1048576
+      Data_free: 4194304
+ Auto_increment: 21763948730
+    Create_time: 2012-11-23 18:20:18
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 直通车排名
+*************************** 83. row ***************************
+           Name: user2
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 507
+ Avg_row_length: 290
+    Data_length: 147456
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2012-12-06 10:11:19
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: IBBD-用户表
+*************************** 84. row ***************************
+           Name: user_item_monitor
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 317
+ Avg_row_length: 361
+    Data_length: 114688
+Max_data_length: 0
+   Index_length: 16384
+      Data_free: 134217728
+ Auto_increment: NULL
+    Create_time: 2012-11-03 02:18:38
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 用户商品监控配置
+*************************** 85. row ***************************
+           Name: user_keywords
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 1941
+ Avg_row_length: 118
+    Data_length: 229376
+Max_data_length: 0
+   Index_length: 425984
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2013-01-07 16:38:29
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 用户表-关键词配置表
+*************************** 86. row ***************************
+           Name: user_keywords_ztc
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 440
+ Avg_row_length: 148
+    Data_length: 65536
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 134217728
+ Auto_increment: NULL
+    Create_time: 2012-11-03 02:18:38
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 用户直通车监控配置
+*************************** 87. row ***************************
+           Name: user_privileges
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 319
+ Avg_row_length: 154
+    Data_length: 49152
+Max_data_length: 0
+   Index_length: 49152
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2012-12-06 12:06:23
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 用户表-权限
+*************************** 88. row ***************************
+           Name: user_privileges_2
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 577
+ Avg_row_length: 170
+    Data_length: 98304
+Max_data_length: 0
+   Index_length: 49152
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2013-01-14 12:07:30
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 用户表-权限
+*************************** 89. row ***************************
+           Name: user_shop_monitor
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 305
+ Avg_row_length: 429
+    Data_length: 131072
+Max_data_length: 0
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2012-11-08 12:09:05
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 用户-店铺监控表
+*************************** 90. row ***************************
+           Name: user_shop_monitor_items
+         Engine: InnoDB
+        Version: 10
+     Row_format: Compact
+           Rows: 199
+ Avg_row_length: 82
+    Data_length: 16384
+Max_data_length: 0
+   Index_length: 81920
+      Data_free: 0
+ Auto_increment: NULL
+    Create_time: 2013-01-16 12:22:51
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options: 
+        Comment: 用户店铺监控商品配置
+90 rows in set (17.63 sec)

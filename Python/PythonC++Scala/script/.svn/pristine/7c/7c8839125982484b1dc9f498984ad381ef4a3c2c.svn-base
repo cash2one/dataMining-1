@@ -1,0 +1,140 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+#概述介绍
+* nagios:是一个监控框架，可以通过在上面添加各自插件来达到监控机器的效果，需要先安装httpd和php
+* nagios-plugins:包含了许多nagios进行监控的插件
+* pnp:nagios获得的主机信息是瞬时的，通过添加pnp插件，能把瞬时的信息保存下来，形成图形报表
+* nrpe:是nagios的一个网络通信插件，通过使用nrpe，nagios服务器能向被监控端传输监控命令并获取结果
+* check_linux_stats.pl:一个nagios监控插件，集成了CPU,内存，网络等的监控命令，需要perl环境和安装Sys-Statistics-Linux，目前我们主要就是使用check_linux_stats.pl进行监控，[文档](http://exchange.nagios.org/directory/Plugins/Operating-Systems/Linux/check_linux_stats/details)
+
+---
+
+#查看路径
+[http://服务端IP/nagios](http://223.4.246.146/nagios)
+
+---
+#被监控端自动化脚本安装
+
+* 把nagios_client_install文件夹拷贝到被监控端上，运行nagios_client_install.sh。
+	输入`/usr/local/nagios/bin/nrpe -c /usr/local/nagios/etc/nrpe.cfg -d`启动nrpe。
+
+* 同时在服务器端的/usr/local/nagios/etc/servers/hosts.cfg添加主机信息，并加入主机组。
+	`service nagios restart`重启服务器。
+
+
+
+---
+
+#配置介绍
+
+##服务端配置
+主要的配置为主机的配置和监控命令的配置。
+
+因为对于远程的机器需要使用nrpe进行传输，而本地监控可以直接进行监控，因而分别进行配置。
+
+###核心配置
+*核心配置文件*/usr/local/nagios/etc/nagios.cfg ：定义了一系列的参数，其他的配置需要在该文件中添加引用才能生效。
+
+在修改了配置文件后，应该调用/usr/local/nagios/bin/nagios -v /usr/local/nagios/etc/nagios.cfg来进行检测，确保配置正确。
+
+###联系人配置
+联系人文件/usr/local/nagios/etc/objects/contacts.cfg
+
+联系人定义
+
+	define contact{
+	    contact_name		nagiosadmin             
+	    use		generic-contact         
+	    alias		Nagios Admin            
+		email		nagios@localhost        
+	}
+	
+
+在/usr/local/nagios/etc/objects/templates.cfg默认的linux-server,host-server定义中都指定了contact_groups是admins。
+
+把联系人添加到admins组中使得联系人得到应用。
+
+	define contactgroup{
+	    contactgroup_name		admins
+	    alias		Nagios Administrators
+	    members		nagiosadmin      #在这里添加进去
+	}
+
+###本地主机配置
+本地主机配置文件位置：/usr/local/nagios/etc/objects/localhost.cfg
+
+主机定义如下
+
+	define host{
+        use		linux-server,hosts-pnp   
+        host_name		localhost
+        alias		223.4.246.146
+        address		127.0.0.1
+    }
+	#use可以理解为继承，即从linux-server,hosts-pnp继承了一些属性
+	#linux-server为nagios原本定义的，而hosts-pnp是为了pnp定义的
+	#在/usr/local/nagios/etc/objects/templates.cfg进行定义     
+    
+服务，也可以当作是监控命令，定义如下
+
+	define service{
+	        use		ocal-service         
+	        host_name		localhost             
+	        service_description		cpu_usage              
+	        check_command		check_local_cpu_usage     
+	}
+	#check_command：这个服务实际上所执行的命令
+    #命令可以在/usr/local/nagios/etc/objects/commands.cfg进行定义
+    #实际上也就是调用在/usr/local/nagios/libexec/里面的各种监控脚本
+	
+为了使得对主机的命令生效，在/usr/local/nagios/etc/nagios.cfg中添加cfg_file=/usr/local/nagios/etc/objects/localhost.cfg使之生效
+
+###远程主机配置
+
+远程主机配置文件：/usr/local/nagios/etc/servers/hosts.cfg
+
+主机定义如下
+    define host {
+            use		linux-server,hosts-pnp
+             host_name		223.4.155.172
+            alias		172_centos5.4
+            address		223.4.155.172
+    }
+    
+远程主机比较多，因此建立了主机组，可以直接对主机组定义服务
+    
+	define hostgroup {
+	        hostgroup_name		nrpe-servers
+	        alias		nrpe-servers
+	        members		42.121.0.186,223.4.155.172  #成员，在这里添加上面定义主机的host_name
+	}  
+   
+远程主机服务配置文件位置：/usr/local/nagios/etc/server/services.cfg
+
+	define service {
+	        use		local-service,services-pnp
+	        hostgroup_name		nrpe-servers       
+	        service_description		DISK_IO
+	        check_command		check_nrpe!check_disk_io            
+	}
+	#在check_command中使用了check_nrpe，这实际上是在objects/commands.cfg中定义的一条简化命令，意思是
+	#在远程机子上执行check_disk_io命令,而check_disk_io命令是在被监控端的/usr/local/nagios/etc/nrpe.cfg中以
+	#command[check_disk_io]=XXXXXX……进行定义 
+	
+在/usr/local/nagios/etc/nagios.cfg里面添加cfg_dir=/usr/local/nagios/etc/servers把整个文件夹的内容都加进入，使之生效
+
+---
+
+###被监控端配置
+
+配置文件/usr/local/nagios/etc/nrpe.cfg
+
+主要包括两项配置
+
+* 在里面添加监控服务器端IP到allowed_host
+* 添加需要监控的命令，如
+	command[check_disk_usage]=/usr/local/nagios/libexec/check_linux_stats.pl -D -w 10 -c 5 -p /
+
+这些都会在被监控端的安装脚本自动完成
+
+
+
