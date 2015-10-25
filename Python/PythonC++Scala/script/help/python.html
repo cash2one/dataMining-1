@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-responsive.min.css">
+  <style type="text/css">
+  .bs-docs-sidenav {
+    width: 228px;
+    margin: 30px 0 0;
+    padding: 0;
+    background-color: #fff;
+    -webkit-border-radius: 6px;
+       -moz-border-radius: 6px;
+            border-radius: 6px;
+    -webkit-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+       -moz-box-shadow: 0 1px 4px rgba(0,0,0,.065);
+            box-shadow: 0 1px 4px rgba(0,0,0,.065);
+  }
+  .bs-docs-sidenav > li > a {
+    display: block;
+    width: 190px \9;
+    margin: 0 0 -1px;
+    padding: 8px 14px;
+    border: 1px solid #e5e5e5;
+  }
+  .bs-docs-sidenav > li:first-child > a {
+    -webkit-border-radius: 6px 6px 0 0;
+       -moz-border-radius: 6px 6px 0 0;
+            border-radius: 6px 6px 0 0;
+  }
+  .bs-docs-sidenav > li:last-child > a {
+    -webkit-border-radius: 0 0 6px 6px;
+       -moz-border-radius: 0 0 6px 6px;
+            border-radius: 0 0 6px 6px;
+  }
+  .bs-docs-sidenav > .active > a {
+    position: relative;
+    z-index: 2;
+    padding: 9px 15px;
+    border: 0;
+    text-shadow: 0 1px 0 rgba(0,0,0,.15);
+    -webkit-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+       -moz-box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+            box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
+  }
+  .bs-docs-sidenav .icon-chevron-right {
+    float: right;
+    margin-top: 2px;
+    margin-right: -6px;
+    opacity: .25;
+  }
+  .bs-docs-sidenav > li > a:hover {
+    background-color: #f5f5f5;
+  }
+  .bs-docs-sidenav a:hover .icon-chevron-right {
+    opacity: .5;
+  }
+  .bs-docs-sidenav .active .icon-chevron-right,
+  .bs-docs-sidenav .active a:hover .icon-chevron-right {
+    background-image: url(../img/glyphicons-halflings-white.png);
+    opacity: 1;
+  }
+  .bs-docs-sidenav.affix {
+    top: 40px;
+  }
+  .bs-docs-sidenav.affix-bottom {
+    position: absolute;
+    top: auto;
+    bottom: 270px;
+  }
+  </style>
+</head>
+<body>
+  <div class="navbar navbar-inverse">
+    <div class="navbar-inner">
+      <a class="brand" href="#">IBBD Team</a>
+      <ul class="nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="project.html">project</a></li>
+        <li class="active"><a href="python.html">python</a></li>
+        <li><a href="#">tornado</a></li>
+        <li><a href="">bootstrap</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="span3 bs-docs-sidebar">
+        <ul class="nav nav-list bs-docs-sidenav affix">
+          <li><a href="#sec1"><i class="icon-chevron-right"></i> Google Python Style Guide</a></li>
+          <li><a href="#sec2"><i class="icon-chevron-right"></i> python 编码规范</a></li>
+          <li><a href="#sec3"><i class="icon-chevron-right"></i> python开发参考</a></li>
+        </ul>
+      </div>
+      <div class="span9">
+        <section id="sec1">
+          <h2>Google Python Style Guide<small><a href="http://google-styleguide.googlecode.com/svn/trunk/pyguide.html">原文链接</a></small></h2>
+          <dl>
+            <dt>public variables</dt>
+            <dd>下划线命名 jiangnan_style</dd>
+            <dt>internal variables</dt>
+            <dd>_var_name</dd>
+            <dt>包命名 Package</dt>
+            <dd>ibbd</dd>
+            <dt>模块命名 Module</dt>
+            <dd>ibbd.handler</dd>
+            <dt>类命名 Class</dt>
+            <dd>Camel ConnectionPool</dd>
+          </dl>
+        </section>
+        <section id="sec2">
+          <h2>python 编码规范</h2>
+          <dl>
+            <dt>字典初始化</dt>
+            <dd>d = dict()</dd>
+          </dl>
+        </section>
+        <section id="sec3">
+          <h2>python开发参考</h2>
+          <ol>
+            <li>python自带文档 通读</li>
+            <li><a href="http://www.rafekettler.com/magicmethods.html">python魔法</a></li>
+            <li><a href="http://www.oschina.net/question/12_78983">Python 开发者应该知道的 7 个开发库</a></li>
+            <li>开源包的源码如tornado redis</li>
+            <li><a href="http://www.tornadoweb.org/documentation/index.html">tornado官方文档</a></li>
+          </ol>
+        </section>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+  <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+#测试报告
+##测试表top_item2
+
+##测试语句，其中使用670个关键词进行遍历测试，获取平均时间，只计算未预热情况时间:
+
+	SELECT T3.item_id,T3.item_name,T3.user_num_id,T3.wangwang,T3.volume2,T3.volume1,(T3.volume1-T3.volume2)/T3.volume2
+	FROM(
+	  SELECT T1.item_pic,T1.item_id,T1.item_name,T1.user_num_id,T1.wangwang,
+		  SUM(CASE WHEN T2.date_of BETWEEN CURDATE()-INTERVAL 7 DAY AND CURDATE() THEN T2.volume ELSE 0 END) AS volume1,
+		  SUM(CASE WHEN T2.date_of BETWEEN CURDATE()-INTERVAL 14 DAY AND CURDATE()-INTERVAL 7 DAY THEN T2.volume ELSE 0 END)  AS volume2
+	  FROM ibbd2.top_cat_search_result T1
+	  LEFT JOIN ibbd2.top_item2 T2
+		  ON T1.item_id=T2.item_id
+		  AND T2.date_of BETWEEN CURDATE()-INTERVAL 14 DAY AND CURDATE()
+	  WHERE T1.keyword='{0}'
+		  AND T1.location LIKE '{1}%'
+		  AND T2.item_id IS NOT NULL
+	  GROUP BY T1.item_id
+	)T3
+	ORDER BY T3.volume1/T3.volume2 DESC 
+	LIMIT {2}, {3}
+        
+##测试情况:
+
+* A：1000万左右数据，已按照月份进行分区，并按照item_id进行20个复合分区，存储引擎为MyISAM
+* B：1000万左右数据，未分区，存储引擎为Innodb
+
+##测试结果(*注意*: 结果也受到存储引擎影响):
+
+* A：平均时间为1.97
+* B：平均时间为9.21
+
+#测试报告2（未完成）
+
+##测试表top_item_tradingtime
+
+##测试语句，其中使用670个关键词进行遍历测试
+###*注意*：数据为规整的模拟数据：
+
+		SELECT t2.hour_of,cast(SUM(t2.volume) AS signed) 
+		FROM ibbd2.top_item_tradingtime t2, ibbd2.top_cat_search_result t1 
+		WHERE t2.item_id =t1.item_id 
+		    AND t1.keyword='{}' 
+		    AND t2.date_of BETWEEN '2013-01-01' AND '2013-01-14' 
+		GROUP BY t2.hour_of; 
+		
+##测试情况：
+
+* A：未分区，存储引擎为Innodb
+* B：分区，存储引擎为Innodb
+
+##测试结果：
+
+* A：测试数据保存在script/ibbd_optimize/test_partition.beforepartition.result
+* B：未测试，测试方法：等待分区完成，在223.4.246.146中cp /etc/my.cnf.bak /etc/my.cnf, service mysql restart重启服务区器（my.cnf.bak为小内存，测试效果更好）
+		运行svn://script/ibbd_optimize/test_parition.py，数据结果将保存至script/ibbd_optimize/test_partition.afterpartition.result

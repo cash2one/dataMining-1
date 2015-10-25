@@ -1,0 +1,13 @@
+echo off    
+echo 正在结束进程
+TASKKILL /F /IM "python*"
+echo 正在更新脚本
+svn up
+echo 更新完毕，准备安装
+python setup.py install
+rd /S /Q build
+cd fetch_cluster
+start slave_async_db.py
+start slave_async_db.py
+echo good
+pause

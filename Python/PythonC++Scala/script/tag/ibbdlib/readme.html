@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="../help/css/jquery.ui.all.css">
+    <link rel="stylesheet" type="text/css" href="../help/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../help/bootstrap/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" type="text/css" href="../help/tocify/jquery.tocify.css">
+    <style type="text/css">
+    #toc li{
+      line-height: 20px;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="span3">
+                <div id="toc"></div>
+            </div>
+            <div class="span9"><h1>ibbdlib公共接口</h1>
+<h2>基础库 <small>ibbdlib.__init__.py</small></h2>
+<h3>ibbdlib.get_db_conn <small>获取数据库连接</small></h3>
+<pre><code>用例：
+    import ibbdlib
+    db_conn = ibbdlib.get_db_conn()
+    db_conn = ibbdlib.get_db_conn(host='localhost', user='root', passwd='')
+    for user in db_conn.iter("SELECT * FROM user"):
+        print user.nick
+    db_conn.close()
+</code></pre>
+<h3>ibbdlib.get_db_pool <small>获取数据库连接池</small></h3>
+<pre><code>用例：
+    import ibbdlib
+
+    # 得到连接池
+    db_conn_pool = ibbdlib.get_db_pool(max_connections=1000)
+    # or
+    db_conn_pool = ibbdlib.get_db_pool(max_connections=1000, host='localhost', user='root', passwd='')
+
+    # 获取一个可用连接
+    db_conn = db_conn_pool.get_connection()
+    for user in db_conn.query("SELECT * FROM user"):
+        print user.nick
+
+    # 释放连接(不允许直接关闭)
+    db_conn_pool.release(db_conn)
+
+    # 断开全部连接
+    db_conn_pool.disconnect()
+</code></pre>
+<h3>ibbdlib.get_redis_conn <small>获取Redis连接</small></h3>
+<pre><code>用例：
+    import ibbdlib
+    re_conn = ibbdlib.get_redis_conn()
+    re_conn = ibbdlib.get_redis_conn(host='localhost', user='', passwd='')
+
+    re_conn.set('foo')
+    re_conn.get('foo')
+
+    del re_conn
+</code></pre>
+<h3>ibbdlib.gen_sql_statement <small>生成SQL语句</small></h3>
+<pre><code>用例：
+    import ibbdlib
+    db_conn = ibbdlib.get_db_conn()
+    print ibbdlib.gen_sql_statement(db_conn, "INSERT INTO user values(%s,%s)", [['wang', datetime.datetime.now()], ['zhang', '2012-11-11 00:00:00']])
+    db_conn.close()
+
+    output:
+        INSERT INTO user values
+        ('wang', '2012-12-12 14:38:17'),
+        ('zhang', '2012-11-11 00:00:00')
+</code></pre>
+<h2>日志 <small>ibbdlib.ibbdlog.py</small></h2>
+<h3>获取日志对象 get_logger()</h3>
+<pre><code>参数：
+    log_path    日志文件夹路径
+    log_file    日志文件
+    output      输出方式 default(console, file)
+    log_name    日志名称
+    msg_format  日志格式
+    time_format     日志中的时间格式
+    time_routate    日志生成机制(默认每天一个文件)
+    log_level       日志级别
+用例:
+    import ibbdlib.ibbdlog
+    log = ibbdlib.ibbdlog.get_logger(log_file='test.log')
+    log.info('hello, i'm ibbd')
+
+    &gt;&gt; hello i'm ibbd
+    file output:
+        ../log/test.log
+</code></pre>
+<h2>redis <small>二次封装的redis函数</small></h2>
+<h3>文件</h3>
+<p>ibbdlib.redislib.py</p>
+<h3>get_redis_conn</h3>
+<pre><code>获取一个redis连接
+用例:
+    import ibbdlib.redislib
+    re_conn = ibbdlib.redislib.get_redis_conn()
+    re_con.set('foo', 'bar')
+    print re_con.get('foo')
+
+    outpu: bar
+</code></pre>
+<h3>redis_pipe</h3>
+<pre><code>执行多条redis命令，并返回结果
+用例：
+    from ibbdlib.redislib import redis_pipe
+    result = redis_pipe(re_conn, [['set', 'foo', 'bar'], ['get', 'foo']])
+    print result
+
+    output: [True, 'bar']
+</code></pre>
+<h2>tornado <small>从tornado中提取的工具</small></h2>
+<h3>render_string(template_str, **kwargs)</h3>
+<pre><code>渲染tornado模板，返回字符串
+用例：
+    import ibbdlib.tornadolib
+    template_str = "&lt;li&gt;{{ func('HelloWorld') }}&lt;/li&gt;"
+    def hello(value):
+        print '%s, ibbd'
+    print ibbdlib.tornadolib.render_string(template_str, func = hello)
+    &gt;&gt; &lt;li&gt;HelloWorld, ibbd&lt;/li&gt;
+</code></pre></div>
+        </div>
+    <script type="text/javascript" src="../help/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="../help/js/jquery-ui-1.9.1.custom.min.js"></script>
+    <script type="text/javascript" src="../help/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../help/tocify/jquery.tocify.min.js"></script>
+    <script type="text/javascript">
+    $(function(){
+      $("#toc").tocify({ selectors: "h2, h3, h4, h5" }).data("tocify");
+    })
+    </script>
+</body>
+</html>

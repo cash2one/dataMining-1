@@ -1,0 +1,195 @@
+开始第 1 个  top_item2 ,还有 68个
+select * from top_item2 into outfile /home/liangj/mysql_copy/data/top_item2.data
+完成 top_item2 ,耗时 1138.58067989
+开始第 2 个  ststc_shop_sales_keyword ,还有 68个
+select * from ststc_shop_sales_keyword into outfile /home/liangj/mysql_copy/data/ststc_shop_sales_keyword.data
+完成 ststc_shop_sales_keyword ,耗时 640.113473177
+跳过第 3 个 top_item2_partition
+开始第 4 个  ststc_keyword_shop_pct ,还有 68个
+select * from ststc_keyword_shop_pct into outfile /home/liangj/mysql_copy/data/ststc_keyword_shop_pct.data
+完成 ststc_keyword_shop_pct ,耗时 586.80013895
+开始第 5 个  ststc_cat_shop_sales_detail ,还有 68个
+select * from ststc_cat_shop_sales_detail into outfile /home/liangj/mysql_copy/data/ststc_cat_shop_sales_detail.data
+完成 ststc_cat_shop_sales_detail ,耗时 398.7066679
+跳过第 6 个 ststc_cat_shop_sales_detail_partition
+跳过第 7 个 ststc_shop_sales_keyword_partition
+跳过第 8 个 ststc_keyword_shop_pct_partition
+开始第 9 个  ststc_item_rate1 ,还有 68个
+select * from ststc_item_rate1 into outfile /home/liangj/mysql_copy/data/ststc_item_rate1.data
+完成 ststc_item_rate1 ,耗时 218.949467182
+开始第 10 个  ststc_cat_range_hotshops ,还有 68个
+select * from ststc_cat_range_hotshops into outfile /home/liangj/mysql_copy/data/ststc_cat_range_hotshops.data
+完成 ststc_cat_range_hotshops ,耗时 267.860010862
+开始第 11 个  top_itemsearchresult ,还有 68个
+select * from top_itemsearchresult into outfile /home/liangj/mysql_copy/data/top_itemsearchresult.data
+完成 top_itemsearchresult ,耗时 291.545922041
+开始第 12 个  quota_tradingtime_aly ,还有 68个
+select * from quota_tradingtime_aly into outfile /home/liangj/mysql_copy/data/quota_tradingtime_aly.data
+完成 quota_tradingtime_aly ,耗时 31.6719479561
+开始第 13 个  ststc_shop_sale_in ,还有 68个
+select * from ststc_shop_sale_in into outfile /home/liangj/mysql_copy/data/ststc_shop_sale_in.data
+完成 ststc_shop_sale_in ,耗时 109.082340956
+跳过第 14 个 top_item_tradingtime_partition2
+开始第 15 个  top_item_buyer ,还有 68个
+select * from top_item_buyer into outfile /home/liangj/mysql_copy/data/top_item_buyer.data
+完成 top_item_buyer ,耗时 83.18689394
+开始第 16 个  top_item_tradingtime ,还有 68个
+select * from top_item_tradingtime into outfile /home/liangj/mysql_copy/data/top_item_tradingtime.data
+完成 top_item_tradingtime ,耗时 105.999538183
+开始第 17 个  top_item4 ,还有 68个
+select * from top_item4 into outfile /home/liangj/mysql_copy/data/top_item4.data
+完成 top_item4 ,耗时 51.3243229389
+开始第 18 个  top_item1 ,还有 68个
+select * from top_item1 into outfile /home/liangj/mysql_copy/data/top_item1.data
+完成 top_item1 ,耗时 47.4979641438
+开始第 19 个  top_cat_items ,还有 68个
+select * from top_cat_items into outfile /home/liangj/mysql_copy/data/top_cat_items.data
+完成 top_cat_items ,耗时 8.53766989708
+开始第 20 个  top_item3 ,还有 68个
+select * from top_item3 into outfile /home/liangj/mysql_copy/data/top_item3.data
+完成 top_item3 ,耗时 90.4486949444
+开始第 21 个  ststc_shop_pct_nokeyword ,还有 68个
+select * from ststc_shop_pct_nokeyword into outfile /home/liangj/mysql_copy/data/ststc_shop_pct_nokeyword.data
+完成 ststc_shop_pct_nokeyword ,耗时 8.87836813927
+开始第 22 个  top_cat_search_result ,还有 68个
+select * from top_cat_search_result into outfile /home/liangj/mysql_copy/data/top_cat_search_result.data
+完成 top_cat_search_result ,耗时 57.042746067
+开始第 23 个  ststc_cat_site_dealprice ,还有 68个
+select * from ststc_cat_site_dealprice into outfile /home/liangj/mysql_copy/data/ststc_cat_site_dealprice.data
+完成 ststc_cat_site_dealprice ,耗时 8.08543395996
+开始第 24 个  quota_shop_credit ,还有 68个
+select * from quota_shop_credit into outfile /home/liangj/mysql_copy/data/quota_shop_credit.data
+完成 quota_shop_credit ,耗时 10.089827776
+开始第 25 个  ststc_shop_apriori ,还有 68个
+select * from ststc_shop_apriori into outfile /home/liangj/mysql_copy/data/ststc_shop_apriori.data
+完成 ststc_shop_apriori ,耗时 10.4555699825
+开始第 26 个  top_shop1 ,还有 68个
+select * from top_shop1 into outfile /home/liangj/mysql_copy/data/top_shop1.data
+完成 top_shop1 ,耗时 8.91289591789
+开始第 27 个  lib_numlist ,还有 68个
+select * from lib_numlist into outfile /home/liangj/mysql_copy/data/lib_numlist.data
+完成 lib_numlist ,耗时 0.621083974838
+开始第 28 个  quota_pct_keyword ,还有 68个
+select * from quota_pct_keyword into outfile /home/liangj/mysql_copy/data/quota_pct_keyword.data
+完成 quota_pct_keyword ,耗时 1.88424110413
+开始第 29 个  quota_sale_index ,还有 68个
+select * from quota_sale_index into outfile /home/liangj/mysql_copy/data/quota_sale_index.data
+完成 quota_sale_index ,耗时 1.19388198853
+开始第 30 个  ststc_cat_dealprice ,还有 68个
+select * from ststc_cat_dealprice into outfile /home/liangj/mysql_copy/data/ststc_cat_dealprice.data
+完成 ststc_cat_dealprice ,耗时 3.18877291679
+开始第 31 个  top_shop2 ,还有 68个
+select * from top_shop2 into outfile /home/liangj/mysql_copy/data/top_shop2.data
+完成 top_shop2 ,耗时 1.96085309982
+开始第 32 个  ststc_keyword_hot_items ,还有 68个
+select * from ststc_keyword_hot_items into outfile /home/liangj/mysql_copy/data/ststc_keyword_hot_items.data
+完成 ststc_keyword_hot_items ,耗时 1.2373521328
+开始第 33 个  ststc_keyword_reporter ,还有 68个
+select * from ststc_keyword_reporter into outfile /home/liangj/mysql_copy/data/ststc_keyword_reporter.data
+完成 ststc_keyword_reporter ,耗时 3.17179083824
+开始第 34 个  top_tiny_shop ,还有 68个
+select * from top_tiny_shop into outfile /home/liangj/mysql_copy/data/top_tiny_shop.data
+完成 top_tiny_shop ,耗时 1.26360011101
+开始第 35 个  lib_datelist ,还有 68个
+select * from lib_datelist into outfile /home/liangj/mysql_copy/data/lib_datelist.data
+完成 lib_datelist ,耗时 0.184644937515
+开始第 36 个  ststc_price_keyword ,还有 68个
+select * from ststc_price_keyword into outfile /home/liangj/mysql_copy/data/ststc_price_keyword.data
+完成 ststc_price_keyword ,耗时 0.313658952713
+开始第 37 个  top_ztc_sum ,还有 68个
+select * from top_ztc_sum into outfile /home/liangj/mysql_copy/data/top_ztc_sum.data
+完成 top_ztc_sum ,耗时 0.602519989014
+开始第 38 个  ststc_ztc_shops ,还有 68个
+select * from ststc_ztc_shops into outfile /home/liangj/mysql_copy/data/ststc_ztc_shops.data
+完成 ststc_ztc_shops ,耗时 0.206830978394
+开始第 39 个  user_keywords ,还有 68个
+select * from user_keywords into outfile /home/liangj/mysql_copy/data/user_keywords.data
+完成 user_keywords ,耗时 1.20296907425
+开始第 40 个  lib_cat_industry_keyword_2 ,还有 68个
+select * from lib_cat_industry_keyword_2 into outfile /home/liangj/mysql_copy/data/lib_cat_industry_keyword_2.data
+完成 lib_cat_industry_keyword_2 ,耗时 0.331305980682
+开始第 41 个  lib_cat_id ,还有 68个
+select * from lib_cat_id into outfile /home/liangj/mysql_copy/data/lib_cat_id.data
+完成 lib_cat_id ,耗时 0.225203990936
+开始第 42 个  user3 ,还有 68个
+select * from user3 into outfile /home/liangj/mysql_copy/data/user3.data
+完成 user3 ,耗时 0.527224063873
+开始第 43 个  schedule_shop_monitor ,还有 68个
+select * from schedule_shop_monitor into outfile /home/liangj/mysql_copy/data/schedule_shop_monitor.data
+完成 schedule_shop_monitor ,耗时 0.168803930283
+开始第 44 个  user_keywords_ztc ,还有 68个
+select * from user_keywords_ztc into outfile /home/liangj/mysql_copy/data/user_keywords_ztc.data
+完成 user_keywords_ztc ,耗时 0.0739831924438
+开始第 45 个  quota_compete_index ,还有 68个
+select * from quota_compete_index into outfile /home/liangj/mysql_copy/data/quota_compete_index.data
+完成 quota_compete_index ,耗时 0.130318164825
+开始第 46 个  user_privileges_2 ,还有 68个
+select * from user_privileges_2 into outfile /home/liangj/mysql_copy/data/user_privileges_2.data
+完成 user_privileges_2 ,耗时 0.117536067963
+开始第 47 个  user_item_monitor ,还有 68个
+select * from user_item_monitor into outfile /home/liangj/mysql_copy/data/user_item_monitor.data
+完成 user_item_monitor ,耗时 0.155391931534
+开始第 48 个  user_shop_monitor ,还有 68个
+select * from user_shop_monitor into outfile /home/liangj/mysql_copy/data/user_shop_monitor.data
+完成 user_shop_monitor ,耗时 1.08507013321
+开始第 49 个  user2 ,还有 68个
+select * from user2 into outfile /home/liangj/mysql_copy/data/user2.data
+完成 user2 ,耗时 0.128687858582
+开始第 50 个  user_shop_monitor_items ,还有 68个
+select * from user_shop_monitor_items into outfile /home/liangj/mysql_copy/data/user_shop_monitor_items.data
+完成 user_shop_monitor_items ,耗时 0.399098873138
+开始第 51 个  ststc_shop_monitor_reporter ,还有 68个
+select * from ststc_shop_monitor_reporter into outfile /home/liangj/mysql_copy/data/ststc_shop_monitor_reporter.data
+完成 ststc_shop_monitor_reporter ,耗时 0.18488907814
+开始第 52 个  user_privileges ,还有 68个
+select * from user_privileges into outfile /home/liangj/mysql_copy/data/user_privileges.data
+完成 user_privileges ,耗时 0.21413397789
+开始第 53 个  lib_industry_3 ,还有 68个
+select * from lib_industry_3 into outfile /home/liangj/mysql_copy/data/lib_industry_3.data
+完成 lib_industry_3 ,耗时 0.158214092255
+开始第 54 个  lib_industry ,还有 68个
+select * from lib_industry into outfile /home/liangj/mysql_copy/data/lib_industry.data
+完成 lib_industry ,耗时 0.12362408638
+开始第 55 个  history_topuser_rfmconfig ,还有 68个
+select * from history_topuser_rfmconfig into outfile /home/liangj/mysql_copy/data/history_topuser_rfmconfig.data
+完成 history_topuser_rfmconfig ,耗时 0.241953849792
+开始第 56 个  lib_province_map ,还有 68个
+select * from lib_province_map into outfile /home/liangj/mysql_copy/data/lib_province_map.data
+完成 lib_province_map ,耗时 0.0538358688354
+开始第 57 个  user_topverify ,还有 68个
+select * from user_topverify into outfile /home/liangj/mysql_copy/data/user_topverify.data
+完成 user_topverify ,耗时 0.101786136627
+开始第 58 个  quota_ratescore_table ,还有 68个
+select * from quota_ratescore_table into outfile /home/liangj/mysql_copy/data/quota_ratescore_table.data
+完成 quota_ratescore_table ,耗时 0.181593894958
+开始第 59 个  quota_rate_evaluate ,还有 68个
+select * from quota_rate_evaluate into outfile /home/liangj/mysql_copy/data/quota_rate_evaluate.data
+完成 quota_rate_evaluate ,耗时 0.0652449131012
+开始第 60 个  lib_rate_library ,还有 68个
+select * from lib_rate_library into outfile /home/liangj/mysql_copy/data/lib_rate_library.data
+完成 lib_rate_library ,耗时 0.0817711353302
+开始第 61 个  top_user ,还有 68个
+select * from top_user into outfile /home/liangj/mysql_copy/data/top_user.data
+完成 top_user ,耗时 0.0777170658112
+开始第 62 个  ststc_shop_recommend_items ,还有 68个
+select * from ststc_shop_recommend_items into outfile /home/liangj/mysql_copy/data/ststc_shop_recommend_items.data
+完成 ststc_shop_recommend_items ,耗时 0.142071008682
+开始第 63 个  ststc_shop_overview ,还有 68个
+select * from ststc_shop_overview into outfile /home/liangj/mysql_copy/data/ststc_shop_overview.data
+完成 ststc_shop_overview ,耗时 0.214084148407
+开始第 64 个  ststc_shop_multi_buyer ,还有 68个
+select * from ststc_shop_multi_buyer into outfile /home/liangj/mysql_copy/data/ststc_shop_multi_buyer.data
+完成 ststc_shop_multi_buyer ,耗时 0.119176864624
+开始第 65 个  backuptables ,还有 68个
+select * from backuptables into outfile /home/liangj/mysql_copy/data/backuptables.data
+完成 backuptables ,耗时 0.0929071903229
+开始第 66 个  backupstatus ,还有 68个
+select * from backupstatus into outfile /home/liangj/mysql_copy/data/backupstatus.data
+完成 backupstatus ,耗时 0.12084197998
+开始第 67 个  backuphost ,还有 68个
+select * from backuphost into outfile /home/liangj/mysql_copy/data/backuphost.data
+完成 backuphost ,耗时 0.115086078644
+开始第 68 个  ststc_shop_credit ,还有 68个
+select * from ststc_shop_credit into outfile /home/liangj/mysql_copy/data/ststc_shop_credit.data
+完成 ststc_shop_credit ,耗时 0.140592813492
+全部完成，总耗时 4196.57854414

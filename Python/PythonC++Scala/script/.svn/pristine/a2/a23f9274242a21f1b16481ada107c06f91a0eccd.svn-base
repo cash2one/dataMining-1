@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" type="text/css" href="help/css/jquery.ui.all.css">
+  <link rel="stylesheet" type="text/css" href="help/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="help/bootstrap/css/bootstrap-responsive.min.css">
+  <link rel="stylesheet" type="text/css" href="help/tocify/jquery.tocify.css">
+  <style type="text/css">
+  #toc li{
+    line-height: 20px;
+  }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="row">
+      <div class="span3">
+        <div id="toc"></div>
+      </div>
+      <div class="span9">
+          <h2>ibbd2数据库概述</h2>
+          <h3>表分类</h3>
+          <table class="table table table-striped table-bordered">
+            <tbody>
+              <tr><td>lib_*</td><td>知识库表如lib_industry,保存了所有可用行业，数据保持不变</td></tr>
+              <tr><td>top_*</td><td>淘宝相关数据表如top_item1保存了所有涉及到的淘宝商品信息，每天更新</td></tr>
+              <tr><td>ststc_*</td><td>统计表，用来保存计算结果，计算数据源：top_*，每天更新(更新标志：date_of字段)</td></tr>
+              <tr><td>quota_*</td><td>指标表，用来保存一些数学模型指标，计算数据源：top_*，每天更新</td></tr>
+              <tr><td>user_*</td><td>用户配置表</td></tr>
+              <tr><td>商品店铺信息</td><td>top_item1<br>top_shop1<br>quota_shop_credit</td></tr>
+              <tr><td>商品每天销量数据</td><td>top_item2</td></tr>
+              <tr><td>商品交易时段数据</td><td>top_item_tradingtime</td></tr>
+              <tr><td>类目下商品&店铺列表</td><td>top_cat_items</td></tr>
+              <tr><td>类目下商品店铺数据</td><td>top_itemsearchresult</td></tr>
+              <tr><td>销量统计表</td><td>ststc_cat_shop_sales_detail<br>ststc_shop_sales_keyword<br>ststc_cat_range_hotshops</td></tr>
+              <tr><td>价格相关表</td><td>ststc_cat_dealprice<br>ststc_price_keyword<br></td></tr>
+              <tr><td>客单价</td><td>ststc_keyword_shop_pct<br>quota_pct_keyword</td></tr>
+              <tr><td>交易时段</td><td>top_item_tradingtime<br>quota_tradingtime_aly</td></tr>
+              <tr><td>统计报表</td><td>ststc_keyword_reporter</td></tr>
+            </tbody>
+          </table>
+          <h3>表命名规则</h3>
+          <table class="table table table-striped table-bordered">
+            <tbody>
+              <tr><td>top_item1</td><td>淘宝商品表，以ID为主键保存最新的商品信息</td></tr>
+              <tr><td>top_item2</td><td>淘宝商品销量数据，以ID和成交日期为主键，保存了每个商品每天的交易统计数据</td></tr>
+              <tr><td>ststc_cat_shop_sale</td><td>ststc开头表示统计表，cat_shop表示统计的维度，sale表示销售数据</td></tr>
+              <tr><td>top_item1</td><td>淘宝商品表，以ID为主键保存最新的商品信息</td></tr>
+            </tbody>
+          </table>
+          <h3>表依赖关系</h3>
+          <table class="table table table-striped table-bordered">
+            <tbody>
+              <tr><td>lib_*不依赖任何表</td></tr>
+              <tr><td>top_*不相互依赖，只依赖topspider数据库里面的表</td></tr>
+              <tr><td>ststc_*表不相互依赖，如果有依赖ststc_*的表则另议</td></tr>
+            </tbody>
+          </table>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>数据库</th>
+              <th>表对象</th>
+              <th>依赖表</th>
+              <th>备注</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ibbd2</td>
+                <td>top_item1</td>
+                <td>topspider.top_item1</td>
+                <td>保存商品的最新信息</td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>top_shop1</td>
+                <td>topspider.top_shop1</td>
+                <td>保存店铺最新信息</td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>top_cat_items</td>
+                <td>topspider.top_itemsearchresult<br>ibbd2.top_item1</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>top_cat_search_result</td>
+                <td>topspider.top_itemsearchresult</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>top_item_tradingtime</td>
+                <td>topdata.top_item_trade</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>quota_shop_credit</td>
+                <td>ibbd2.top_cat_items<br>ibbd2.top_shop1</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>ststc_cat_site_dealprice</td>
+                <td>ibbd2.top_cat_items<br>ibbd2.top_item2</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>ststc_cat_shop_sales_detail</td>
+                <td>ibbd2.top_cat_items<br>ibbd2.top_item2<br>ibbd2.top_item1</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>ststc_cat_dealprice</td>
+                <td>ibbd2.top_cat_items<br>ibbd2.top_item2</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>ststc_shop_sales_keyword</td>
+                <td>ibbd2.top_cat_items<br>ibbd2.top_item2</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>ststc_keyword_shop_pct</td>
+                <td>ibbd2.top_cat_items<br>topdata.top_item_trade</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>quota_pct_keyword</td>
+                <td>ibbd2.top_cat_items<br>ibbd2.top_item2</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>quota_tradingtime_aly</td>
+                <td>ibbd2.top_cat_items<br>ibbd2.top_item_tradingtime</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>ststc_cat_range_hotshops</td>
+                <td>ibbd2.top_cat_items<br>ibbd2.top_item2<br>ibbd2.top_shop1</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>ststc_keyword_reporter</td>
+                <td>ibbd2.top_cat_items<br>ibbd2.top_item2<br>ibbd2.top_shop1</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <h3>字段命名规则</h3>
+          <table class="table table table-striped table-bordered">
+            <tbody>
+              <tr><td>类目</td><td>新建表一律用cat表示(catagory)，旧表沿用keyword</td></tr>
+              <tr>
+                <td>店铺</td>
+                <td>
+                  <dl>
+                    <dt>店铺名称</dt>
+                    <dd>shop_name</dd>
+                    <dt>店铺旺旺</dt>
+                    <dd>wangwang</dd>
+                    <dt>店铺用户ID</dt>
+                    <dd>user_num_id</dd>
+                    <dt>店铺ID</dt>
+                    <dd>shop_id</dd>
+                  </dl>
+                </td>
+              </tr>
+              <tr><td>销售量</td><td>volume</td></tr>
+              <tr><td>销售额</td><td>sales</td></tr>
+              <tr><td>交易次数</td><td>trade_num</td></tr>
+              <tr><td>买家数量</td><td>buyer_num</td></tr>
+              <tr><td>客单价</td><td>pct</td></tr>
+              <tr><td>统计基期</td><td>date_of&nbsp;如商品在date_of日期的销售额</td></tr>
+              <tr><td>历史表</td><td>*_his_* 以his_*结尾，最后加上编号，编号可以用自动增加，也可用日期20121211</td></tr>
+              <tr><td>存储过程命名</td><td>命名：sp_*(以sp_开头，后面加表名)，传入参数格式：in_date_of格式</td></tr>
+              <tr><td>存储过程SQL</td><td>SQL语句需要格式化(关键字大写等，参考现有sp)</td></tr>
+              <tr><td>存储过程计算</td><td>传入参数格式参照sp_ststc_cat_shop_sale(只需要传入元数据的更新日期)</td></tr>
+            </tbody>
+          </table>
+          <h3>备注</h3>
+          <table class="table table table-striped table-bordered">
+            <tbody>
+              <tr><td><b>类目</b>与<b>关键字同义</td></tr>
+              <tr><td>cat和keyword都表示关键字或类目</td></tr>
+            </tbody>
+          </table>
+          <h2>ibbd2 <small>业务数据库</small></h2>
+          
+          {% for i, table_name in enumerate(tables_order) %}
+          {% if not tables_order[i-1].startswith('ibbd2.lib_') and tables_order[i].startswith('ibbd2.lib_') %}<h3>知识库表</h3>
+          {% elif not tables_order[i-1].startswith('ibbd2.user') and tables_order[i].startswith('ibbd2.user') %}<h3>用户配置表</h3>
+          {% elif not tables_order[i-1].startswith('ibbd2.top_') and tables_order[i].startswith('ibbd2.top_') %}<h3>淘宝数据基础统计表</h3>
+          {% elif not tables_order[i-1].startswith('ibbd2.ststc_') and tables_order[i].startswith('ibbd2.ststc_') %}<h3>统计表</h3>
+          {% elif not tables_order[i-1].startswith('ibbd2.quota_') and tables_order[i].startswith('ibbd2.quota_') %}<h3>指数表</h3>
+          {% elif tables_order[i-1][:7]==tables_order[i][:7] %}
+          {% else %}<h3>其他表</h3>
+          {% end %}
+          <h4>{{table_name}}</h4>
+          <label class="label label-info">{{ibbd2_tables[table_name]['TABLE_COMMENT']}}</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              {% for col in ibbd2_tables[table_name]['COLUMNS'] %}
+              <tr>
+                <td>{{col['COLUMN_NAME']}}</td>
+                <td>{{col['COLUMN_TYPE']}}</td>
+                <td>{{col['COLUMN_KEY']}}</td>
+                <td>{{col['COLUMN_COMMENT']}}</td>
+              </tr>
+              {% end %}
+            </tbody>
+          </table>
+          {% end %}
+      </div>
+    </section>
+  </div>
+  <script type="text/javascript" src="help/js/jquery-1.8.3.min.js"></script>
+  <script type="text/javascript" src="help/js/jquery-ui-1.9.1.custom.min.js"></script>
+  <script type="text/javascript" src="help/bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="help/tocify/jquery.tocify.min.js"></script>
+  <script type="text/javascript">
+  $(function(){
+    $("#toc").tocify({ selectors: "h2, h3, h4, h5" }).data("tocify");
+  })
+  </script>
+</body>
+</html>

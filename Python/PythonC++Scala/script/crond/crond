@@ -1,0 +1,2 @@
+0 3-23/1 * * * /usr/bin/python /data/script/tag/fetch_cluster/keep_schedule.py >> /data/log/keep_schedule.log 2>>/data/log/keep_schedule_error.log
+*/10 1-23 * * * /usr/bin/python /data/script/schedule/schedule_alarm.py

@@ -1,0 +1,7 @@
+#!/usr/bin/python2.7
+# -*- coding: utf-8 -*-
+
+'''\xe6\x96\xb0\xe6\xb5\xaa\xe5\xbe\xae\xe5\x8d\x9aAPI\xe5\xba\x94\xe7\x94\xa8\n'''
+
+__author__ = 'Cooper'
+__version__ = '0.1'

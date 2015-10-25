@@ -1,0 +1,123 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+# 关于表转换为myisam及把varchar转换为bigint的测试报告
+
+主要转换的列包括item_id,user_num_id,shop_id
+
+测试机子为223.4.155.152及223.4.216.246
+
+因为机子的性能不同，同时针对innodb与MyISAM的配置也不同，测试结果有偏差！！！
+
+223.4.155.152配置：
+
+*	CPU: E5645四核2.40GHz（ cat /proc/cpuinfo | grep name | cut -f2 -d: | uniq -c ）
+*	物理内存:4G
+*	swap:4G	
+*	MySQL使用2.5G物理内存，使用2.3Gswap内存,核心配置innodb_buffer_pool_size = 2560M
+	（key_buffer_size=1024M -_- 这个完全没必要）
+	
+223.4.216.246配置：
+
+*	CPU: E5645单核2.40GHz
+*	物理内存:2G
+*	swap:4G
+*	MySQL使用1.2G物理内存，不使用swap,核心配置key_buffer_size=1024M
+	
+***
+
+# 更新方案
+
+注意：表的更新数据可能没有导出,建议先在172上运行测试一次
+
+* 导出数据：script/ibbd_optimize/ouput_all_data.py
+* 创建表结构：script/ibbd_optiimze/ibbd2.myisam.int.newtable.str
+* 导入数据：script/ibbd_optimize/input_all_data.py
+
+***
+
+### 测试语句及结果
+***
+
+        SELECT
+        SUM(T2.hour_0),
+        SUM(T2.hour_1),
+        SUM(T2.hour_2),
+        SUM(T2.hour_3),
+        SUM(T2.hour_4),
+        SUM(T2.hour_5),
+        SUM(T2.hour_6),
+        SUM(T2.hour_7),
+        SUM(T2.hour_8),
+        SUM(T2.hour_9),
+        SUM(T2.hour_10),
+        SUM(T2.hour_11),
+        SUM(T2.hour_12),
+        SUM(T2.hour_13),
+        SUM(T2.hour_14),
+        SUM(T2.hour_15),
+        SUM(T2.hour_16),
+        SUM(T2.hour_17),
+        SUM(T2.hour_18),
+        SUM(T2.hour_19),
+        SUM(T2.hour_20),
+        SUM(T2.hour_21),
+        SUM(T2.hour_22),
+        SUM(T2.hour_23)
+        FROM ibbd2.top_cat_search_result T1
+        LEFT JOIN ibbd2.top_item_tradingtime T2
+        ON T1.item_id = T2.item_id
+        AND T2.date_of BETWEEN '2013-02-26 00:00:00' AND '2013-03-04 00:00:00'
+        WHERE T1.keyword='{}'
+            
+223.4.155.152  :2.82172909696
+
+223.4.216.246:0
+
+***
+
+            SELECT cast(t2.avg_deal_price AS signed), cast(SUM(t2.volume) AS signed) 
+            FROM ibbd2.top_item2 t2,ibbd2.top_cat_items t1 
+            WHERE t1.item_id = t2.item_id 
+            AND t2.date_of BETWEEN '2012-12-25' AND '2013-01-10' 
+            AND t1.keyword='{}' AND t2.item_id IS NOT NULL 
+            GROUP BY cast(t2.avg_deal_price AS signed) 
+            ORDER BY cast(t2.avg_deal_price AS signed);
+            
+223.4.155.152:平均时间：9.17787616379    次数：95
+
+223.4.216.246:平均时间：2.01346411087    次数：54
+
+***
+
+        SELECT T1.item_id,T1.item_name,T1.user_num_id,T1.wangwang,CAST(SUM(T2.volume) AS SIGNED),MAX(CASE WHEN T2.date_of='2012-12-25' THEN T2.volume ELSE 0 END)
+        FROM ibbd2.top_cat_search_result T1
+        LEFT JOIN ibbd2.top_item2 T2
+        ON T1.item_id = T2.item_id
+        AND T2.date_of BETWEEN ('2012-12-25' - INTERVAL 6 DAY) AND '2012-12-25'
+        WHERE T1.keyword='{}'
+        GROUP BY T1.item_id
+        ORDER BY SUM(T2.volume) DESC
+        LIMIT 0,50
+    
+223.4.155.152:平均时间：1.56874982516    次数：6
+
+223.4.216.246:平均时间：0    次数：0
+
+***
+
+	SELECT DATE_FORMAT(date_of,'%Y/%m/%d'),
+	            CAST(SUM(buyer_num) AS SIGNED),
+	            CAST(SUM(trade_num) AS SIGNED),
+	            CAST(SUM(sales) AS SIGNED),
+	            CAST(SUM(sales)/SUM(buyer_num) AS SIGNED)
+	        FROM ibbd2.ststc_keyword_shop_pct
+	        WHERE keyword='{}'
+	        AND date_of BETWEEN '2012-12-25' AND '2013-01-10' 
+	        GROUP BY date_of
+        
+223.4.155.152:平均时间：3.70568364758    次数：59
+
+223.4.216.246:平均时间：0    次数：0
+
+***
+

@@ -1,0 +1,4558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" type="text/css" href="help/css/jquery.ui.all.css">
+  <link rel="stylesheet" type="text/css" href="help/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="help/bootstrap/css/bootstrap-responsive.min.css">
+  <link rel="stylesheet" type="text/css" href="help/tocify/jquery.tocify.css">
+  <style type="text/css">
+  #toc li{
+    line-height: 20px;
+  }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="row">
+      <div class="span3">
+        <div id="toc"></div>
+      </div>
+      <div class="span9">
+          <h2>ibbd2数据库概述</h2>
+          <h3>表分类</h3>
+          <table class="table table table-striped table-bordered">
+            <tbody>
+              <tr><td>lib_*</td><td>知识库表如lib_industry,保存了所有可用行业，数据保持不变</td></tr>
+              <tr><td>top_*</td><td>淘宝相关数据表如top_item1保存了所有涉及到的淘宝商品信息，每天更新</td></tr>
+              <tr><td>ststc_*</td><td>统计表，用来保存计算结果，计算数据源：top_*，每天更新(更新标志：date_of字段)</td></tr>
+              <tr><td>quota_*</td><td>指标表，用来保存一些数学模型指标，计算数据源：top_*，每天更新</td></tr>
+              <tr><td>user_*</td><td>用户配置表</td></tr>
+              <tr><td>商品店铺信息</td><td>top_item1<br>top_shop1<br>quota_shop_credit</td></tr>
+              <tr><td>商品每天销量数据</td><td>top_item2</td></tr>
+              <tr><td>商品交易时段数据</td><td>top_item_tradingtime</td></tr>
+              <tr><td>类目下商品&店铺列表</td><td>top_cat_items</td></tr>
+              <tr><td>类目下商品店铺数据</td><td>top_itemsearchresult</td></tr>
+              <tr><td>销量统计表</td><td>ststc_cat_shop_sales_detail<br>ststc_shop_sales_keyword<br>ststc_cat_range_hotshops</td></tr>
+              <tr><td>价格相关表</td><td>ststc_cat_dealprice<br>ststc_price_keyword<br></td></tr>
+              <tr><td>客单价</td><td>ststc_keyword_shop_pct<br>quota_pct_keyword</td></tr>
+              <tr><td>交易时段</td><td>top_item_tradingtime<br>quota_tradingtime_aly</td></tr>
+              <tr><td>统计报表</td><td>ststc_keyword_reporter</td></tr>
+            </tbody>
+          </table>
+          <h3>表命名规则</h3>
+          <table class="table table table-striped table-bordered">
+            <tbody>
+              <tr><td>top_item1</td><td>淘宝商品表，以ID为主键保存最新的商品信息</td></tr>
+              <tr><td>top_item2</td><td>淘宝商品销量数据，以ID和成交日期为主键，保存了每个商品每天的交易统计数据</td></tr>
+              <tr><td>ststc_cat_shop_sale</td><td>ststc开头表示统计表，cat_shop表示统计的维度，sale表示销售数据</td></tr>
+              <tr><td>top_item1</td><td>淘宝商品表，以ID为主键保存最新的商品信息</td></tr>
+            </tbody>
+          </table>
+          <h3>表依赖关系</h3>
+          <table class="table table table-striped table-bordered">
+            <tbody>
+              <tr><td>lib_*不依赖任何表</td></tr>
+              <tr><td>top_*不相互依赖，只依赖topspider数据库里面的表</td></tr>
+              <tr><td>ststc_*表不相互依赖，如果有依赖ststc_*的表则另议</td></tr>
+            </tbody>
+          </table>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>数据库</th>
+              <th>表对象</th>
+              <th>依赖表</th>
+              <th>备注</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ibbd2</td>
+                <td>top_item1</td>
+                <td>topspider.top_item1</td>
+                <td>保存商品的最新信息</td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>top_shop1</td>
+                <td>topspider.top_shop1</td>
+                <td>保存店铺最新信息</td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>top_cat_items</td>
+                <td>topspider.top_itemsearchresult<br>ibbd2.top_item1</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>top_cat_search_result</td>
+                <td>topspider.top_itemsearchresult</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>top_item_tradingtime</td>
+                <td>topdata.top_item_trade</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>quota_shop_credit</td>
+                <td>ibbd2.top_cat_items<br>ibbd2.top_shop1</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>ststc_cat_site_dealprice</td>
+                <td>ibbd2.top_cat_items<br>ibbd2.top_item2</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>ststc_cat_shop_sales_detail</td>
+                <td>ibbd2.top_cat_items<br>ibbd2.top_item2<br>ibbd2.top_item1</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>ststc_cat_dealprice</td>
+                <td>ibbd2.top_cat_items<br>ibbd2.top_item2</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>ststc_shop_sales_keyword</td>
+                <td>ibbd2.top_cat_items<br>ibbd2.top_item2</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>ststc_keyword_shop_pct</td>
+                <td>ibbd2.top_cat_items<br>topdata.top_item_trade</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>quota_pct_keyword</td>
+                <td>ibbd2.top_cat_items<br>ibbd2.top_item2</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>quota_tradingtime_aly</td>
+                <td>ibbd2.top_cat_items<br>ibbd2.top_item_tradingtime</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>ststc_cat_range_hotshops</td>
+                <td>ibbd2.top_cat_items<br>ibbd2.top_item2<br>ibbd2.top_shop1</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>ibbd2</td>
+                <td>ststc_keyword_reporter</td>
+                <td>ibbd2.top_cat_items<br>ibbd2.top_item2<br>ibbd2.top_shop1</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+          <h3>字段命名规则</h3>
+          <table class="table table table-striped table-bordered">
+            <tbody>
+              <tr><td>类目</td><td>新建表一律用cat表示(catagory)，旧表沿用keyword</td></tr>
+              <tr>
+                <td>店铺</td>
+                <td>
+                  <dl>
+                    <dt>店铺名称</dt>
+                    <dd>shop_name</dd>
+                    <dt>店铺旺旺</dt>
+                    <dd>wangwang</dd>
+                    <dt>店铺用户ID</dt>
+                    <dd>user_num_id</dd>
+                    <dt>店铺ID</dt>
+                    <dd>shop_id</dd>
+                  </dl>
+                </td>
+              </tr>
+              <tr><td>销售量</td><td>volume</td></tr>
+              <tr><td>销售额</td><td>sales</td></tr>
+              <tr><td>交易次数</td><td>trade_num</td></tr>
+              <tr><td>买家数量</td><td>buyer_num</td></tr>
+              <tr><td>客单价</td><td>pct</td></tr>
+              <tr><td>统计基期</td><td>date_of&nbsp;如商品在date_of日期的销售额</td></tr>
+              <tr><td>历史表</td><td>*_his_* 以his_*结尾，最后加上编号，编号可以用自动增加，也可用日期20121211</td></tr>
+              <tr><td>存储过程命名</td><td>命名：sp_*(以sp_开头，后面加表名)，传入参数格式：in_date_of格式</td></tr>
+              <tr><td>存储过程SQL</td><td>SQL语句需要格式化(关键字大写等，参考现有sp)</td></tr>
+              <tr><td>存储过程计算</td><td>传入参数格式参照sp_ststc_cat_shop_sale(只需要传入元数据的更新日期)</td></tr>
+            </tbody>
+          </table>
+          <h3>备注</h3>
+          <table class="table table table-striped table-bordered">
+            <tbody>
+              <tr><td><b>类目</b>与<b>关键字同义</td></tr>
+              <tr><td>cat和keyword都表示关键字或类目</td></tr>
+            </tbody>
+          </table>
+          <h2>ibbd2 <small>业务数据库</small></h2>
+          
+          
+          <h3>其他表</h3>
+          
+          <h4>ibbd2.history_topuser_rfmconfig</h4>
+          <label class="label label-info">历史表——淘宝用户最后一次RFM计算表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>top_nick</td>
+                <td>varchar(50)</td>
+                <td>MUL</td>
+                <td>淘宝昵称</td>
+              </tr>
+              
+              <tr>
+                <td>r</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>R值</td>
+              </tr>
+              
+              <tr>
+                <td>f</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>F值</td>
+              </tr>
+              
+              <tr>
+                <td>m</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>M值</td>
+              </tr>
+              
+              <tr>
+                <td>rw</td>
+                <td>float</td>
+                <td></td>
+                <td>R权重</td>
+              </tr>
+              
+              <tr>
+                <td>fw</td>
+                <td>float</td>
+                <td></td>
+                <td>F权重</td>
+              </tr>
+              
+              <tr>
+                <td>mw</td>
+                <td>float</td>
+                <td></td>
+                <td>M权重</td>
+              </tr>
+              
+              <tr>
+                <td>lmin</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>L最小值</td>
+              </tr>
+              
+              <tr>
+                <td>lmax</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>L最大值</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          <h3>知识库表</h3>
+          
+          <h4>ibbd2.lib_cat_id</h4>
+          <label class="label label-info">知识库-类目ID表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>cat_id</td>
+                <td>int(11)</td>
+                <td>PRI</td>
+                <td>类目ID</td>
+              </tr>
+              
+              <tr>
+                <td>cat_name</td>
+                <td>varchar(50)</td>
+                <td>MUL</td>
+                <td>类目名称</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.lib_cat_industry_keyword</h4>
+          <label class="label label-info">知识库——行业类目-行业-关键词列表(校正版)</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>cat</td>
+                <td>varchar(100)</td>
+                <td>PRI</td>
+                <td>大类目</td>
+              </tr>
+              
+              <tr>
+                <td>industry</td>
+                <td>varchar(100)</td>
+                <td>PRI</td>
+                <td>行业</td>
+              </tr>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(50)</td>
+                <td>PRI</td>
+                <td>关键词</td>
+              </tr>
+              
+              <tr>
+                <td>status</td>
+                <td>varchar(5)</td>
+                <td></td>
+                <td>状态</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.lib_datelist</h4>
+          <label class="label label-info"></label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td>PRI</td>
+                <td></td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.lib_industry</h4>
+          <label class="label label-info">知识库——行业表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>industry</td>
+                <td>varchar(100)</td>
+                <td>MUL</td>
+                <td>行业名称</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.lib_industry_2</h4>
+          <label class="label label-info">知识库——类目行业表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>cat</td>
+                <td>varchar(50)</td>
+                <td>PRI</td>
+                <td>行业类目</td>
+              </tr>
+              
+              <tr>
+                <td>industry</td>
+                <td>varchar(100)</td>
+                <td>PRI</td>
+                <td>行业名称</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.lib_numlist</h4>
+          <label class="label label-info"></label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>num</td>
+                <td>int(4)</td>
+                <td></td>
+                <td></td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.lib_province_map</h4>
+          <label class="label label-info">知识库-省份中英文对照表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>province_en</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>省份英文名</td>
+              </tr>
+              
+              <tr>
+                <td>province_cn</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>省份中文名</td>
+              </tr>
+              
+              <tr>
+                <td>province_cn2</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>省份中文简写</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.lib_rate_library</h4>
+          <label class="label label-info">知识库-评论关键词得分表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>industry</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>关键词</td>
+              </tr>
+              
+              <tr>
+                <td>theme</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>主题</td>
+              </tr>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(100)</td>
+                <td></td>
+                <td>关键词</td>
+              </tr>
+              
+              <tr>
+                <td>appraisal</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>评论词</td>
+              </tr>
+              
+              <tr>
+                <td>score</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>评价词得分</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.log_call_proc</h4>
+          <label class="label label-info">SP调用日志</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>db_name</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>数据库名称</td>
+              </tr>
+              
+              <tr>
+                <td>sp_name</td>
+                <td>varchar(100)</td>
+                <td>MUL</td>
+                <td>SP名称</td>
+              </tr>
+              
+              <tr>
+                <td>param_type</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>参数类型</td>
+              </tr>
+              
+              <tr>
+                <td>param_val</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>参数值</td>
+              </tr>
+              
+              <tr>
+                <td>start_time</td>
+                <td>datetime</td>
+                <td>MUL</td>
+                <td>调用开始时间</td>
+              </tr>
+              
+              <tr>
+                <td>end_time</td>
+                <td>datetime</td>
+                <td>MUL</td>
+                <td>调用结束时间</td>
+              </tr>
+              
+              <tr>
+                <td>status</td>
+                <td>varchar(5)</td>
+                <td>MUL</td>
+                <td>运行状态 R S F</td>
+              </tr>
+              
+              <tr>
+                <td>rows</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>受影响的行数</td>
+              </tr>
+              
+              <tr>
+                <td>remark</td>
+                <td>varchar(50)</td>
+                <td></td>
+                <td>备注</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          <h3>指数表</h3>
+          
+          <h4>ibbd2.quota_compete_index</h4>
+          <label class="label label-info">指数表-竞争指数(暂时弃用)</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>关键词</td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td></td>
+                <td>当期</td>
+              </tr>
+              
+              <tr>
+                <td>compete_index</td>
+                <td>float</td>
+                <td></td>
+                <td>竞争指数</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.quota_pct_keyword</h4>
+          <label class="label label-info">指数表-关键词客单价</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>关键词</td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td>PRI</td>
+                <td>当期</td>
+              </tr>
+              
+              <tr>
+                <td>trade_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>交易单数</td>
+              </tr>
+              
+              <tr>
+                <td>volume</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>销量</td>
+              </tr>
+              
+              <tr>
+                <td>sales</td>
+                <td>float</td>
+                <td></td>
+                <td>销售额</td>
+              </tr>
+              
+              <tr>
+                <td>pct</td>
+                <td>float</td>
+                <td></td>
+                <td>客单价</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.quota_pricesale_index</h4>
+          <label class="label label-info">指数表-价格销售指数表(暂时弃用)</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>关键词</td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td></td>
+                <td>当期</td>
+              </tr>
+              
+              <tr>
+                <td>base_date</td>
+                <td>date</td>
+                <td></td>
+                <td>基期</td>
+              </tr>
+              
+              <tr>
+                <td>price_index</td>
+                <td>float</td>
+                <td></td>
+                <td>价格指数</td>
+              </tr>
+              
+              <tr>
+                <td>sale_index</td>
+                <td>float</td>
+                <td></td>
+                <td>销售指数</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.quota_rate_evaluate</h4>
+          <label class="label label-info">计算结果表-评论得分评估表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>shop_id</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>店铺ID</td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>店铺用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>item_id</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>商品ID</td>
+              </tr>
+              
+              <tr>
+                <td>rate_id</td>
+                <td>varchar(30)</td>
+                <td></td>
+                <td>评价ID</td>
+              </tr>
+              
+              <tr>
+                <td>rate_time</td>
+                <td>datetime</td>
+                <td></td>
+                <td>评论时间</td>
+              </tr>
+              
+              <tr>
+                <td>content</td>
+                <td>varchar(500)</td>
+                <td></td>
+                <td>评价内容</td>
+              </tr>
+              
+              <tr>
+                <td>theme</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>评论主题</td>
+              </tr>
+              
+              <tr>
+                <td>appraisal</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>评价词</td>
+              </tr>
+              
+              <tr>
+                <td>score</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>主题得分</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.quota_ratescore_table</h4>
+          <label class="label label-info">统计表-关键词下商品评论得分</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>关键词</td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td></td>
+                <td>当期</td>
+              </tr>
+              
+              <tr>
+                <td>rank</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>关键词下排名</td>
+              </tr>
+              
+              <tr>
+                <td>item_id</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>商品ID</td>
+              </tr>
+              
+              <tr>
+                <td>item_name</td>
+                <td>varchar(250)</td>
+                <td></td>
+                <td>商品名称</td>
+              </tr>
+              
+              <tr>
+                <td>item_pic</td>
+                <td>varchar(200)</td>
+                <td></td>
+                <td>商品图片地址</td>
+              </tr>
+              
+              <tr>
+                <td>wangwang</td>
+                <td>varchar(200)</td>
+                <td></td>
+                <td>店铺旺旺</td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>店铺用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>score</td>
+                <td>float</td>
+                <td>MUL</td>
+                <td>加权得分</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.quota_sale_index</h4>
+          <label class="label label-info">指数表-销售额</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>关键词</td>
+              </tr>
+              
+              <tr>
+                <td>province</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>省份</td>
+              </tr>
+              
+              <tr>
+                <td>city</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>城市</td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td>PRI</td>
+                <td>指标时间戳</td>
+              </tr>
+              
+              <tr>
+                <td>sales</td>
+                <td>float</td>
+                <td></td>
+                <td>销售额</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.quota_shop_credit</h4>
+          <label class="label label-info">指数表-店铺信用级别表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>关键词</td>
+              </tr>
+              
+              <tr>
+                <td>province</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>省份</td>
+              </tr>
+              
+              <tr>
+                <td>city</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>城市</td>
+              </tr>
+              
+              <tr>
+                <td>credit_level</td>
+                <td>varchar(10)</td>
+                <td>PRI</td>
+                <td>信用级别</td>
+              </tr>
+              
+              <tr>
+                <td>shop_id</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>店铺ID</td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>店铺用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>shop_name</td>
+                <td>varchar(100)</td>
+                <td></td>
+                <td>店铺名称</td>
+              </tr>
+              
+              <tr>
+                <td>shop_type</td>
+                <td>varchar(5)</td>
+                <td></td>
+                <td>店铺类型</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.quota_tradingtime_aly</h4>
+          <label class="label label-info">指数表-交易时段结果表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>关键词</td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td>PRI</td>
+                <td>当期</td>
+              </tr>
+              
+              <tr>
+                <td>hour_of</td>
+                <td>int(11)</td>
+                <td>PRI</td>
+                <td>小时</td>
+              </tr>
+              
+              <tr>
+                <td>volume</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>销售量</td>
+              </tr>
+              
+              <tr>
+                <td>sales</td>
+                <td>float</td>
+                <td></td>
+                <td>销售额</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          <h3>统计表</h3>
+          
+          <h4>ibbd2.ststc_cat_dealprice</h4>
+          <label class="label label-info">统计表——类目下商品的平均成交价</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(50)</td>
+                <td>PRI</td>
+                <td>关键词</td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td>PRI</td>
+                <td>日期</td>
+              </tr>
+              
+              <tr>
+                <td>avg_dealprice</td>
+                <td>float(10,2)</td>
+                <td></td>
+                <td>平均成交价</td>
+              </tr>
+              
+              <tr>
+                <td>min_dealprice</td>
+                <td>float(10,2)</td>
+                <td></td>
+                <td>最低成交价</td>
+              </tr>
+              
+              <tr>
+                <td>max_dealprice</td>
+                <td>float(10,2)</td>
+                <td></td>
+                <td>最高成交价</td>
+              </tr>
+              
+              <tr>
+                <td>item_count</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>商品数量</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td>MUL</td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.ststc_cat_hotshops</h4>
+          <label class="label label-info">统计表——类目下的热销店铺Top20</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(30)</td>
+                <td>PRI</td>
+                <td>类目</td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td>PRI</td>
+                <td>日期</td>
+              </tr>
+              
+              <tr>
+                <td>shop_id</td>
+                <td>varchar(30)</td>
+                <td>PRI</td>
+                <td>店铺ID</td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(30)</td>
+                <td>MUL</td>
+                <td>店铺用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>wangwang</td>
+                <td>varchar(30)</td>
+                <td></td>
+                <td>店铺旺旺昵称</td>
+              </tr>
+              
+              <tr>
+                <td>item_amount</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>商品数量</td>
+              </tr>
+              
+              <tr>
+                <td>volume</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>销售量</td>
+              </tr>
+              
+              <tr>
+                <td>trade_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>交易单数</td>
+              </tr>
+              
+              <tr>
+                <td>sales</td>
+                <td>float(20,2)</td>
+                <td></td>
+                <td>销售额</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td>MUL</td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.ststc_cat_range_hotshops</h4>
+          <label class="label label-info">统计表——类目下时间区间内的热销店铺</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(30)</td>
+                <td>PRI</td>
+                <td>类目</td>
+              </tr>
+              
+              <tr>
+                <td>from_date</td>
+                <td>date</td>
+                <td>PRI</td>
+                <td>日期</td>
+              </tr>
+              
+              <tr>
+                <td>to_date</td>
+                <td>date</td>
+                <td>PRI</td>
+                <td>日期</td>
+              </tr>
+              
+              <tr>
+                <td>shop_id</td>
+                <td>varchar(30)</td>
+                <td>PRI</td>
+                <td>店铺ID</td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(30)</td>
+                <td>MUL</td>
+                <td>店铺用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>wangwang</td>
+                <td>varchar(30)</td>
+                <td></td>
+                <td>店铺旺旺昵称</td>
+              </tr>
+              
+              <tr>
+                <td>item_amount</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>商品数量</td>
+              </tr>
+              
+              <tr>
+                <td>volume</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>销售量</td>
+              </tr>
+              
+              <tr>
+                <td>trade_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>交易单数</td>
+              </tr>
+              
+              <tr>
+                <td>sales</td>
+                <td>float(20,2)</td>
+                <td></td>
+                <td>销售额</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td>MUL</td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.ststc_cat_shop_sale</h4>
+          <label class="label label-info">统计表——类目搜索范围内店铺的销售情况</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(30)</td>
+                <td>PRI</td>
+                <td>关键词类目</td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td>PRI</td>
+                <td>日期</td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>店铺用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>volume</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>销售件数</td>
+              </tr>
+              
+              <tr>
+                <td>trade_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>交易次数</td>
+              </tr>
+              
+              <tr>
+                <td>sales</td>
+                <td>float</td>
+                <td></td>
+                <td>销售额</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.ststc_cat_shop_sales_detail</h4>
+          <label class="label label-info">统计表——类目&amp;店铺销售统计表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(30)</td>
+                <td>PRI</td>
+                <td>关键词类目</td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td>PRI</td>
+                <td>日期</td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(30)</td>
+                <td>PRI</td>
+                <td>店铺用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>wangwang</td>
+                <td>varchar(50)</td>
+                <td></td>
+                <td>卖家旺旺昵称</td>
+              </tr>
+              
+              <tr>
+                <td>province</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>省份</td>
+              </tr>
+              
+              <tr>
+                <td>city</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>城市</td>
+              </tr>
+              
+              <tr>
+                <td>volume</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>销售件数</td>
+              </tr>
+              
+              <tr>
+                <td>trade_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>交易次数</td>
+              </tr>
+              
+              <tr>
+                <td>sales</td>
+                <td>float</td>
+                <td></td>
+                <td>销售额</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.ststc_cat_site_dealprice</h4>
+          <label class="label label-info">统计表——类目&amp;店铺类型对应的平均成交价</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(50)</td>
+                <td>PRI</td>
+                <td>关键词</td>
+              </tr>
+              
+              <tr>
+                <td>site_type</td>
+                <td>varchar(5)</td>
+                <td>PRI</td>
+                <td>店铺类型</td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td>PRI</td>
+                <td>日期</td>
+              </tr>
+              
+              <tr>
+                <td>avg_dealprice</td>
+                <td>float(10,2)</td>
+                <td></td>
+                <td>平均成交价</td>
+              </tr>
+              
+              <tr>
+                <td>min_dealprice</td>
+                <td>float(10,2)</td>
+                <td></td>
+                <td>最低成交价</td>
+              </tr>
+              
+              <tr>
+                <td>max_dealprice</td>
+                <td>float(10,2)</td>
+                <td></td>
+                <td>最高成交价</td>
+              </tr>
+              
+              <tr>
+                <td>item_count</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>商品数量</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td>MUL</td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.ststc_item_rate1</h4>
+          <label class="label label-info">统计表-商品评价统计</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>item_id</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>商品ID</td>
+              </tr>
+              
+              <tr>
+                <td>rate_id</td>
+                <td>varchar(40)</td>
+                <td>PRI</td>
+                <td>评论ID</td>
+              </tr>
+              
+              <tr>
+                <td>rate_date</td>
+                <td>datetime</td>
+                <td>MUL</td>
+                <td>评论时间</td>
+              </tr>
+              
+              <tr>
+                <td>nick</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>评论人昵称</td>
+              </tr>
+              
+              <tr>
+                <td>user_id</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>评论人ID</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td>MUL</td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.ststc_keyword_hot_items</h4>
+          <label class="label label-info">统计表——关键词下热销商品列表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(30)</td>
+                <td>MUL</td>
+                <td>关键词类目</td>
+              </tr>
+              
+              <tr>
+                <td>from_date</td>
+                <td>date</td>
+                <td>MUL</td>
+                <td>日期区间</td>
+              </tr>
+              
+              <tr>
+                <td>to_date</td>
+                <td>date</td>
+                <td>MUL</td>
+                <td>日期区间</td>
+              </tr>
+              
+              <tr>
+                <td>item_id</td>
+                <td>varchar(30)</td>
+                <td>MUL</td>
+                <td>商品ID</td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(30)</td>
+                <td>MUL</td>
+                <td>店铺用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>volume</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>销量</td>
+              </tr>
+              
+              <tr>
+                <td>trade_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>交易次数</td>
+              </tr>
+              
+              <tr>
+                <td>sales</td>
+                <td>float</td>
+                <td></td>
+                <td>销售额</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.ststc_keyword_reporter</h4>
+          <label class="label label-info">类目统计报表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(30)</td>
+                <td>PRI</td>
+                <td>类目</td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td>PRI</td>
+                <td>日期</td>
+              </tr>
+              
+              <tr>
+                <td>shop_amount_b</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>B店店铺数量</td>
+              </tr>
+              
+              <tr>
+                <td>shop_amount_c</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>C点店铺数量</td>
+              </tr>
+              
+              <tr>
+                <td>item_amount_b</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>B店商品数量</td>
+              </tr>
+              
+              <tr>
+                <td>item_amount_c</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>C店商品数量</td>
+              </tr>
+              
+              <tr>
+                <td>volume_b</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>商城销量</td>
+              </tr>
+              
+              <tr>
+                <td>volume_c</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>集市销量</td>
+              </tr>
+              
+              <tr>
+                <td>trade_num_b</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>商城交易单数</td>
+              </tr>
+              
+              <tr>
+                <td>trade_num_c</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>集市交易单数</td>
+              </tr>
+              
+              <tr>
+                <td>avg_price</td>
+                <td>float(10,2)</td>
+                <td></td>
+                <td>平均成交价</td>
+              </tr>
+              
+              <tr>
+                <td>avg_price_b</td>
+                <td>float(10,2)</td>
+                <td></td>
+                <td>商城平均成交价</td>
+              </tr>
+              
+              <tr>
+                <td>avg_price_c</td>
+                <td>float(10,2)</td>
+                <td></td>
+                <td>集市平均成交价</td>
+              </tr>
+              
+              <tr>
+                <td>sales_b</td>
+                <td>float(20,2)</td>
+                <td></td>
+                <td>商城销售额</td>
+              </tr>
+              
+              <tr>
+                <td>sales_c</td>
+                <td>float(20,2)</td>
+                <td></td>
+                <td>集市销售额</td>
+              </tr>
+              
+              <tr>
+                <td>pct</td>
+                <td>float(10,2)</td>
+                <td></td>
+                <td>客单价</td>
+              </tr>
+              
+              <tr>
+                <td>pct_b</td>
+                <td>float(10,2)</td>
+                <td></td>
+                <td>商城客单价</td>
+              </tr>
+              
+              <tr>
+                <td>pct_c</td>
+                <td>float(10,2)</td>
+                <td></td>
+                <td>集市客单价</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td>MUL</td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.ststc_keyword_shop_pct</h4>
+          <label class="label label-info">统计表-关键词类目下店铺的客单价</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(30)</td>
+                <td>PRI</td>
+                <td>关键词类目</td>
+              </tr>
+              
+              <tr>
+                <td>wangwang</td>
+                <td>varchar(50)</td>
+                <td>PRI</td>
+                <td>旺旺昵称</td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td>PRI</td>
+                <td>日期</td>
+              </tr>
+              
+              <tr>
+                <td>item_count</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>商品数量</td>
+              </tr>
+              
+              <tr>
+                <td>trade_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>交易记录数</td>
+              </tr>
+              
+              <tr>
+                <td>volume</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>销售件数</td>
+              </tr>
+              
+              <tr>
+                <td>sales</td>
+                <td>float</td>
+                <td></td>
+                <td>销售额</td>
+              </tr>
+              
+              <tr>
+                <td>buyer_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>买家数量</td>
+              </tr>
+              
+              <tr>
+                <td>pct</td>
+                <td>float</td>
+                <td></td>
+                <td>客单价</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.ststc_price_keyword</h4>
+          <label class="label label-info">统计表-关键词下价格统计信息</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>关键词</td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td>PRI</td>
+                <td>当期</td>
+              </tr>
+              
+              <tr>
+                <td>avg_price</td>
+                <td>float</td>
+                <td></td>
+                <td>平均价</td>
+              </tr>
+              
+              <tr>
+                <td>max_price</td>
+                <td>float</td>
+                <td></td>
+                <td>最高价</td>
+              </tr>
+              
+              <tr>
+                <td>min_price</td>
+                <td>float</td>
+                <td></td>
+                <td>最低价</td>
+              </tr>
+              
+              <tr>
+                <td>item_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>商品数量</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.ststc_shop_credit</h4>
+          <label class="label label-info">统计表-店铺信用级别表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>province</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>省份</td>
+              </tr>
+              
+              <tr>
+                <td>city</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>城市</td>
+              </tr>
+              
+              <tr>
+                <td>shop_id</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>店铺ID</td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>店铺用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>shop_name</td>
+                <td>varchar(100)</td>
+                <td></td>
+                <td>店铺名称</td>
+              </tr>
+              
+              <tr>
+                <td>shop_type</td>
+                <td>varchar(5)</td>
+                <td></td>
+                <td>店铺类型</td>
+              </tr>
+              
+              <tr>
+                <td>credit_level</td>
+                <td>varchar(10)</td>
+                <td>MUL</td>
+                <td>信用级别</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.ststc_shop_customers</h4>
+          <label class="label label-info">统计表-店铺的买家列表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>店铺用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>shop_name</td>
+                <td>varchar(100)</td>
+                <td></td>
+                <td>店铺名称</td>
+              </tr>
+              
+              <tr>
+                <td>wangwang</td>
+                <td>varchar(50)</td>
+                <td></td>
+                <td>旺旺昵称</td>
+              </tr>
+              
+              <tr>
+                <td>buyer_id</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>买家ID</td>
+              </tr>
+              
+              <tr>
+                <td>buyer_nick</td>
+                <td>varchar(50)</td>
+                <td></td>
+                <td>买家昵称</td>
+              </tr>
+              
+              <tr>
+                <td>lastest_trade_time</td>
+                <td>datetime</td>
+                <td></td>
+                <td>最近一次交易时间</td>
+              </tr>
+              
+              <tr>
+                <td>trade_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>交易次数</td>
+              </tr>
+              
+              <tr>
+                <td>trade_sales</td>
+                <td>float</td>
+                <td></td>
+                <td>交易金额（不准确）</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.ststc_shop_multi_buyer</h4>
+          <label class="label label-info">统计表-店铺内组合买家购买列表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>shop_id</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>店铺ID</td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>店铺用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td></td>
+                <td>日期</td>
+              </tr>
+              
+              <tr>
+                <td>identifier</td>
+                <td>varchar(30)</td>
+                <td></td>
+                <td>买家识别标志</td>
+              </tr>
+              
+              <tr>
+                <td>buyer_id</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>买家ID</td>
+              </tr>
+              
+              <tr>
+                <td>iids</td>
+                <td>varchar(300)</td>
+                <td></td>
+                <td>购买ID列表</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.ststc_shop_pct_nokeyword</h4>
+          <label class="label label-info">客单价店铺统计表，不具有关键词信息</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>shop_id</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td></td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td>PRI</td>
+                <td>日期</td>
+              </tr>
+              
+              <tr>
+                <td>sales</td>
+                <td>int(11)</td>
+                <td></td>
+                <td></td>
+              </tr>
+              
+              <tr>
+                <td>buyer_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td></td>
+              </tr>
+              
+              <tr>
+                <td>trade_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td></td>
+              </tr>
+              
+              <tr>
+                <td>volume</td>
+                <td>int(11)</td>
+                <td></td>
+                <td></td>
+              </tr>
+              
+              <tr>
+                <td>item_count</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>商品数量（多少商品当天有销量）</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.ststc_shop_recommend_items</h4>
+          <label class="label label-info">统计表-关联推荐结果表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>shop_id</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>店铺ID</td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>店铺用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td></td>
+                <td>日期</td>
+              </tr>
+              
+              <tr>
+                <td>iid1</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>商品1</td>
+              </tr>
+              
+              <tr>
+                <td>iid2</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>商品2</td>
+              </tr>
+              
+              <tr>
+                <td>sup</td>
+                <td>float</td>
+                <td></td>
+                <td>支持度</td>
+              </tr>
+              
+              <tr>
+                <td>trade_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>组合成交笔数</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.ststc_shop_sale_in</h4>
+          <label class="label label-info">统计表——店铺每日销售数据(商品为监控列表中的商品)</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(30)</td>
+                <td>PRI</td>
+                <td>店铺用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>shop_id</td>
+                <td>varchar(30)</td>
+                <td>MUL</td>
+                <td>店铺ID</td>
+              </tr>
+              
+              <tr>
+                <td>wangwang</td>
+                <td>varchar(100)</td>
+                <td></td>
+                <td>旺旺昵称</td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td>PRI</td>
+                <td>日期</td>
+              </tr>
+              
+              <tr>
+                <td>volume</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>销量</td>
+              </tr>
+              
+              <tr>
+                <td>sales</td>
+                <td>float(10,1)</td>
+                <td></td>
+                <td>销售额</td>
+              </tr>
+              
+              <tr>
+                <td>trade_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>交易单数</td>
+              </tr>
+              
+              <tr>
+                <td>pct</td>
+                <td>float(10,1)</td>
+                <td></td>
+                <td>客单价</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td>MUL</td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.ststc_shop_sales_keyword</h4>
+          <label class="label label-info">统计表-关键词下店铺每日销售数据</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>关键词</td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>店铺用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td>PRI</td>
+                <td>当期</td>
+              </tr>
+              
+              <tr>
+                <td>volume</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>销量</td>
+              </tr>
+              
+              <tr>
+                <td>trade_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>交易单数</td>
+              </tr>
+              
+              <tr>
+                <td>sales</td>
+                <td>float</td>
+                <td></td>
+                <td>销售额</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.ststc_user_hostitems_7</h4>
+          <label class="label label-info">用户监控列表最近7天热销商品</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>user</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>用户昵称</td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td></td>
+                <td>日期</td>
+              </tr>
+              
+              <tr>
+                <td>item_id</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>商品ID</td>
+              </tr>
+              
+              <tr>
+                <td>item_name</td>
+                <td>varchar(250)</td>
+                <td></td>
+                <td>商品名称</td>
+              </tr>
+              
+              <tr>
+                <td>item_pic</td>
+                <td>varchar(200)</td>
+                <td></td>
+                <td>商品图片</td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>店铺用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>wangwang</td>
+                <td>varchar(100)</td>
+                <td></td>
+                <td>旺旺昵称</td>
+              </tr>
+              
+              <tr>
+                <td>volume</td>
+                <td>int(32)</td>
+                <td></td>
+                <td>销量</td>
+              </tr>
+              
+              <tr>
+                <td>sales</td>
+                <td>float</td>
+                <td></td>
+                <td>销售额</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.ststc_user_hot_items</h4>
+          <label class="label label-info">统计表——关键词下热销商品列表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>user</td>
+                <td>varchar(30)</td>
+                <td>MUL</td>
+                <td>用户</td>
+              </tr>
+              
+              <tr>
+                <td>from_date</td>
+                <td>date</td>
+                <td>MUL</td>
+                <td>日期区间</td>
+              </tr>
+              
+              <tr>
+                <td>to_date</td>
+                <td>date</td>
+                <td>MUL</td>
+                <td>日期区间</td>
+              </tr>
+              
+              <tr>
+                <td>item_id</td>
+                <td>varchar(30)</td>
+                <td>MUL</td>
+                <td>商品ID</td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(30)</td>
+                <td>MUL</td>
+                <td>店铺用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>volume</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>销量</td>
+              </tr>
+              
+              <tr>
+                <td>trade_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>交易次数</td>
+              </tr>
+              
+              <tr>
+                <td>sales</td>
+                <td>float</td>
+                <td></td>
+                <td>销售额</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.ststc_ztc_shops</h4>
+          <label class="label label-info">淘宝商品表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>关键词</td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>卖家用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>wangwang</td>
+                <td>varchar(50)</td>
+                <td></td>
+                <td>掌柜昵称</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          <h3>其他表</h3>
+          
+          <h4>ibbd2.test</h4>
+          <label class="label label-info"></label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>test</td>
+                <td>varchar(11)</td>
+                <td>PRI</td>
+                <td></td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          <h3>淘宝数据基础统计表</h3>
+          
+          <h4>ibbd2.top_cat_items</h4>
+          <label class="label label-info">类目下商品列表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(30)</td>
+                <td>PRI</td>
+                <td>类目</td>
+              </tr>
+              
+              <tr>
+                <td>item_id</td>
+                <td>varchar(30)</td>
+                <td>PRI</td>
+                <td>商品ID</td>
+              </tr>
+              
+              <tr>
+                <td>site_id</td>
+                <td>varchar(5)</td>
+                <td></td>
+                <td>店铺类型</td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(30)</td>
+                <td>MUL</td>
+                <td>卖家用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td>MUL</td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.top_cat_search_result</h4>
+          <label class="label label-info">淘宝商品搜索结果表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>搜索关键词</td>
+              </tr>
+              
+              <tr>
+                <td>rank</td>
+                <td>int(11)</td>
+                <td>MUL</td>
+                <td>排名</td>
+              </tr>
+              
+              <tr>
+                <td>item_id</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>商品ID</td>
+              </tr>
+              
+              <tr>
+                <td>item_name</td>
+                <td>varchar(250)</td>
+                <td></td>
+                <td>商品名称</td>
+              </tr>
+              
+              <tr>
+                <td>item_pic</td>
+                <td>varchar(200)</td>
+                <td></td>
+                <td>商品图片</td>
+              </tr>
+              
+              <tr>
+                <td>wangwang</td>
+                <td>varchar(100)</td>
+                <td></td>
+                <td>旺旺昵称</td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>店铺用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>price</td>
+                <td>float</td>
+                <td></td>
+                <td>商品标价</td>
+              </tr>
+              
+              <tr>
+                <td>location</td>
+                <td>varchar(50)</td>
+                <td>MUL</td>
+                <td>商品所在地</td>
+              </tr>
+              
+              <tr>
+                <td>volume</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>最近销量</td>
+              </tr>
+              
+              <tr>
+                <td>rate_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>商品评论量</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td>MUL</td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.top_item1</h4>
+          <label class="label label-info">商品表1</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>item_id</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>商品ID</td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>店铺用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>shop_id</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>店铺ID</td>
+              </tr>
+              
+              <tr>
+                <td>shop_type</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>所属店铺类型</td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>datetime</td>
+                <td>MUL</td>
+                <td>属性更新时间</td>
+              </tr>
+              
+              <tr>
+                <td>price</td>
+                <td>float</td>
+                <td></td>
+                <td>商品发布价格</td>
+              </tr>
+              
+              <tr>
+                <td>title</td>
+                <td>varchar(250)</td>
+                <td></td>
+                <td>商品标题</td>
+              </tr>
+              
+              <tr>
+                <td>location</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>商品所在地</td>
+              </tr>
+              
+              <tr>
+                <td>location2</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>修正地址</td>
+              </tr>
+              
+              <tr>
+                <td>brand</td>
+                <td>varchar(30)</td>
+                <td>MUL</td>
+                <td>商品品牌</td>
+              </tr>
+              
+              <tr>
+                <td>item_img</td>
+                <td>varchar(100)</td>
+                <td></td>
+                <td>商品图片</td>
+              </tr>
+              
+              <tr>
+                <td>volume_month</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>月销量</td>
+              </tr>
+              
+              <tr>
+                <td>volume_all</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>总销量</td>
+              </tr>
+              
+              <tr>
+                <td>cid</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>类目</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td>MUL</td>
+                <td>时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.top_item2</h4>
+          <label class="label label-info">商品表2（统计表）</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>item_id</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>商品ID</td>
+              </tr>
+              
+              <tr>
+                <td>shop_id</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>店铺ID</td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td>PRI</td>
+                <td>属性更新时间</td>
+              </tr>
+              
+              <tr>
+                <td>price</td>
+                <td>float</td>
+                <td></td>
+                <td>初始价格</td>
+              </tr>
+              
+              <tr>
+                <td>volume</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>商品销量</td>
+              </tr>
+              
+              <tr>
+                <td>trade_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>成交笔数</td>
+              </tr>
+              
+              <tr>
+                <td>sales</td>
+                <td>float</td>
+                <td></td>
+                <td>销售额</td>
+              </tr>
+              
+              <tr>
+                <td>min_deal_price</td>
+                <td>float</td>
+                <td></td>
+                <td>商品最小成交价</td>
+              </tr>
+              
+              <tr>
+                <td>avg_deal_price</td>
+                <td>float</td>
+                <td></td>
+                <td>商品平均成交价</td>
+              </tr>
+              
+              <tr>
+                <td>buyer_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>购买人数</td>
+              </tr>
+              
+              <tr>
+                <td>pct</td>
+                <td>float</td>
+                <td></td>
+                <td>客单价</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td>MUL</td>
+                <td>时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.top_item_buyer</h4>
+          <label class="label label-info">商品买家列表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>item_id</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>..ID</td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td></td>
+                <td>..</td>
+              </tr>
+              
+              <tr>
+                <td>nick</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>..</td>
+              </tr>
+              
+              <tr>
+                <td>rank</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>....</td>
+              </tr>
+              
+              <tr>
+                <td>identifier</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>.....</td>
+              </tr>
+              
+              <tr>
+                <td>trade_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>....</td>
+              </tr>
+              
+              <tr>
+                <td>volume</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>....</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>...</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.top_item_pic</h4>
+          <label class="label label-info"></label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>item_id</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>宝贝ID</td>
+              </tr>
+              
+              <tr>
+                <td>item_img</td>
+                <td>varchar(100)</td>
+                <td></td>
+                <td>宝贝图片</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.top_item_search_result</h4>
+          <label class="label label-info">淘宝商品搜索结果表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>搜索关键词</td>
+              </tr>
+              
+              <tr>
+                <td>rank</td>
+                <td>int(11)</td>
+                <td>MUL</td>
+                <td>排名</td>
+              </tr>
+              
+              <tr>
+                <td>item_id</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>商品ID</td>
+              </tr>
+              
+              <tr>
+                <td>item_name</td>
+                <td>varchar(250)</td>
+                <td></td>
+                <td>商品名称</td>
+              </tr>
+              
+              <tr>
+                <td>item_pic</td>
+                <td>varchar(200)</td>
+                <td></td>
+                <td>商品图片</td>
+              </tr>
+              
+              <tr>
+                <td>wangwang</td>
+                <td>varchar(100)</td>
+                <td></td>
+                <td>旺旺昵称</td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>店铺用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>price</td>
+                <td>float</td>
+                <td></td>
+                <td>商品标价</td>
+              </tr>
+              
+              <tr>
+                <td>location</td>
+                <td>varchar(50)</td>
+                <td>MUL</td>
+                <td>商品所在地</td>
+              </tr>
+              
+              <tr>
+                <td>volume</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>最近销量</td>
+              </tr>
+              
+              <tr>
+                <td>rate_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>商品评论量</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td>MUL</td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.top_item_tradingtime</h4>
+          <label class="label label-info">商品表-交易时段表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>item_id</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>商品ID</td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td>PRI</td>
+                <td>日期</td>
+              </tr>
+              
+              <tr>
+                <td>hour_of</td>
+                <td>int(11)</td>
+                <td>PRI</td>
+                <td>小时</td>
+              </tr>
+              
+              <tr>
+                <td>volume</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>销量</td>
+              </tr>
+              
+              <tr>
+                <td>sales</td>
+                <td>float</td>
+                <td></td>
+                <td>销售额</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td>MUL</td>
+                <td></td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.top_itemsearchresult</h4>
+          <label class="label label-info">淘宝商品搜索结果表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>搜索关键词</td>
+              </tr>
+              
+              <tr>
+                <td>rank</td>
+                <td>int(11)</td>
+                <td>MUL</td>
+                <td>排名</td>
+              </tr>
+              
+              <tr>
+                <td>item_id</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>商品ID</td>
+              </tr>
+              
+              <tr>
+                <td>item_name</td>
+                <td>varchar(250)</td>
+                <td></td>
+                <td>商品名称</td>
+              </tr>
+              
+              <tr>
+                <td>item_pic</td>
+                <td>varchar(200)</td>
+                <td></td>
+                <td>商品图片</td>
+              </tr>
+              
+              <tr>
+                <td>wangwang</td>
+                <td>varchar(100)</td>
+                <td></td>
+                <td>旺旺昵称</td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>店铺用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>price</td>
+                <td>float</td>
+                <td></td>
+                <td>商品标价</td>
+              </tr>
+              
+              <tr>
+                <td>location</td>
+                <td>varchar(50)</td>
+                <td>MUL</td>
+                <td>商品所在地</td>
+              </tr>
+              
+              <tr>
+                <td>volume</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>最近销量</td>
+              </tr>
+              
+              <tr>
+                <td>rate_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>商品评论量</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td>MUL</td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.top_shop1</h4>
+          <label class="label label-info">淘宝店铺表1</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>shop_id</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>店铺ID</td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>店铺用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>shop_name</td>
+                <td>varchar(100)</td>
+                <td>MUL</td>
+                <td>店铺名称</td>
+              </tr>
+              
+              <tr>
+                <td>wangwang</td>
+                <td>varchar(50)</td>
+                <td>MUL</td>
+                <td>旺旺昵称</td>
+              </tr>
+              
+              <tr>
+                <td>shop_type</td>
+                <td>varchar(5)</td>
+                <td></td>
+                <td>店铺类型</td>
+              </tr>
+              
+              <tr>
+                <td>shop_rank</td>
+                <td>varchar(10)</td>
+                <td></td>
+                <td>店铺信用评级</td>
+              </tr>
+              
+              <tr>
+                <td>location</td>
+                <td>varchar(15)</td>
+                <td>MUL</td>
+                <td>所在地</td>
+              </tr>
+              
+              <tr>
+                <td>location2</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>修正地区</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td>MUL</td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.top_shop1_bak</h4>
+          <label class="label label-info">淘宝店铺表1</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>shop_id</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>店铺ID</td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>店铺用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>shop_name</td>
+                <td>varchar(100)</td>
+                <td>MUL</td>
+                <td>店铺名称</td>
+              </tr>
+              
+              <tr>
+                <td>wangwang</td>
+                <td>varchar(50)</td>
+                <td>MUL</td>
+                <td>旺旺昵称</td>
+              </tr>
+              
+              <tr>
+                <td>shop_type</td>
+                <td>varchar(5)</td>
+                <td></td>
+                <td>店铺类型</td>
+              </tr>
+              
+              <tr>
+                <td>shop_rank</td>
+                <td>varchar(10)</td>
+                <td></td>
+                <td>店铺信用评级</td>
+              </tr>
+              
+              <tr>
+                <td>location</td>
+                <td>varchar(15)</td>
+                <td>MUL</td>
+                <td>所在地</td>
+              </tr>
+              
+              <tr>
+                <td>location2</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>修正地区</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td>MUL</td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.top_shop2</h4>
+          <label class="label label-info">淘宝店铺表2</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>shop_id</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>店铺ID</td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>店铺用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>date_of</td>
+                <td>date</td>
+                <td></td>
+                <td></td>
+              </tr>
+              
+              <tr>
+                <td>item_num</td>
+                <td>int(11)</td>
+                <td>MUL</td>
+                <td>商品数量</td>
+              </tr>
+              
+              <tr>
+                <td>lastest_trade_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>最近订单数</td>
+              </tr>
+              
+              <tr>
+                <td>lastest_sale</td>
+                <td>float</td>
+                <td></td>
+                <td>最近销售额</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td>MUL</td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.top_tiny_shop</h4>
+          <label class="label label-info">简单的店铺表，可能数据不全</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>id</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td></td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td></td>
+              </tr>
+              
+              <tr>
+                <td>wangwang</td>
+                <td>varchar(255)</td>
+                <td>MUL</td>
+                <td>店铺旺旺</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.top_user</h4>
+          <label class="label label-info">淘宝用户表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>user_id</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>用户公开ID</td>
+              </tr>
+              
+              <tr>
+                <td>nick</td>
+                <td>varchar(20)</td>
+                <td>MUL</td>
+                <td>昵称</td>
+              </tr>
+              
+              <tr>
+                <td>gender</td>
+                <td>varchar(2)</td>
+                <td>MUL</td>
+                <td>性别</td>
+              </tr>
+              
+              <tr>
+                <td>state</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>用户所在省市</td>
+              </tr>
+              
+              <tr>
+                <td>city</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>用户所在地</td>
+              </tr>
+              
+              <tr>
+                <td>created</td>
+                <td>datetime</td>
+                <td></td>
+                <td>用户创建时间</td>
+              </tr>
+              
+              <tr>
+                <td>last_visit</td>
+                <td>datetime</td>
+                <td></td>
+                <td>用户最后访问时间</td>
+              </tr>
+              
+              <tr>
+                <td>buyer_credit_good_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>收到的好评总条数</td>
+              </tr>
+              
+              <tr>
+                <td>buyer_credit_level</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>买家信用等级</td>
+              </tr>
+              
+              <tr>
+                <td>buyer_credit_score</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>买家信用总分</td>
+              </tr>
+              
+              <tr>
+                <td>buyer_credit_total_num</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>收到的评价总条数</td>
+              </tr>
+              
+              <tr>
+                <td>update_status</td>
+                <td>varchar(5)</td>
+                <td>MUL</td>
+                <td>更新计划状态</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.top_ztc_sum</h4>
+          <label class="label label-info">直通车排名</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>id</td>
+                <td>bigint(20)</td>
+                <td>PRI</td>
+                <td>暂定使用item_id</td>
+              </tr>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(30)</td>
+                <td>MUL</td>
+                <td>关键词</td>
+              </tr>
+              
+              <tr>
+                <td>key</td>
+                <td>varchar(50)</td>
+                <td></td>
+                <td>搜索词</td>
+              </tr>
+              
+              <tr>
+                <td>item_id</td>
+                <td>bigint(20)</td>
+                <td>MUL</td>
+                <td>商品id</td>
+              </tr>
+              
+              <tr>
+                <td>avg_rank</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>评价排名</td>
+              </tr>
+              
+              <tr>
+                <td>lastest_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>最后更新时间</td>
+              </tr>
+              
+              <tr>
+                <td>shop_id</td>
+                <td>varchar(255)</td>
+                <td></td>
+                <td>卖家用户ID</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.topapi_itemcats</h4>
+          <label class="label label-info">淘宝API-后台类目表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>cid</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>类目ID</td>
+              </tr>
+              
+              <tr>
+                <td>name</td>
+                <td>varchar(50)</td>
+                <td></td>
+                <td>类目名称</td>
+              </tr>
+              
+              <tr>
+                <td>is_parent</td>
+                <td>varchar(1)</td>
+                <td></td>
+                <td>是否父类目</td>
+              </tr>
+              
+              <tr>
+                <td>parent_id</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>父类目ID</td>
+              </tr>
+              
+              <tr>
+                <td>sorter_order</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>序号</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.topapi_itemprops</h4>
+          <label class="label label-info">淘宝API-商品属性表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>cid</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>类目ID</td>
+              </tr>
+              
+              <tr>
+                <td>prop_date</td>
+                <td>datetime</td>
+                <td></td>
+                <td>时间戳</td>
+              </tr>
+              
+              <tr>
+                <td>prop_pid</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>属性ID</td>
+              </tr>
+              
+              <tr>
+                <td>prop_pname</td>
+                <td>varchar(30)</td>
+                <td></td>
+                <td>属性名</td>
+              </tr>
+              
+              <tr>
+                <td>prop_vid</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>属性值ID</td>
+              </tr>
+              
+              <tr>
+                <td>prop_vname</td>
+                <td>varchar(30)</td>
+                <td></td>
+                <td>属性值</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          <h3>用户配置表</h3>
+          
+          <h4>ibbd2.user2</h4>
+          <label class="label label-info">IBBD-用户表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>user</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>用户名</td>
+              </tr>
+              
+              <tr>
+                <td>passwd</td>
+                <td>varchar(30)</td>
+                <td></td>
+                <td>登陆密码</td>
+              </tr>
+              
+              <tr>
+                <td>nick</td>
+                <td>varchar(30)</td>
+                <td></td>
+                <td>用户昵称</td>
+              </tr>
+              
+              <tr>
+                <td>email</td>
+                <td>varchar(50)</td>
+                <td></td>
+                <td>用户注册邮箱</td>
+              </tr>
+              
+              <tr>
+                <td>tel</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>联系信息</td>
+              </tr>
+              
+              <tr>
+                <td>shop_link</td>
+                <td>varchar(50)</td>
+                <td></td>
+                <td>店铺域名</td>
+              </tr>
+              
+              <tr>
+                <td>wangwang</td>
+                <td>varchar(50)</td>
+                <td></td>
+                <td>用户店铺旺旺</td>
+              </tr>
+              
+              <tr>
+                <td>shop_name</td>
+                <td>varchar(100)</td>
+                <td></td>
+                <td>店铺名称</td>
+              </tr>
+              
+              <tr>
+                <td>shop_uid</td>
+                <td>varchar(30)</td>
+                <td></td>
+                <td>用户淘宝店铺ID</td>
+              </tr>
+              
+              <tr>
+                <td>location</td>
+                <td>varchar(20)</td>
+                <td></td>
+                <td>用户所在地</td>
+              </tr>
+              
+              <tr>
+                <td>industry</td>
+                <td>varchar(50)</td>
+                <td></td>
+                <td>用户所在行业</td>
+              </tr>
+              
+              <tr>
+                <td>create_time</td>
+                <td>datetime</td>
+                <td></td>
+                <td>用户注册时间</td>
+              </tr>
+              
+              <tr>
+                <td>status</td>
+                <td>varchar(5)</td>
+                <td></td>
+                <td>账户状态</td>
+              </tr>
+              
+              <tr>
+                <td>unused</td>
+                <td>varchar(200)</td>
+                <td></td>
+                <td>保留字段</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.user_item_monitor</h4>
+          <label class="label label-info">用户商品监控配置</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>user</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>用户昵称</td>
+              </tr>
+              
+              <tr>
+                <td>item_id</td>
+                <td>varchar(30)</td>
+                <td>PRI</td>
+                <td>商品ID</td>
+              </tr>
+              
+              <tr>
+                <td>item_title</td>
+                <td>varchar(250)</td>
+                <td></td>
+                <td>商品名称</td>
+              </tr>
+              
+              <tr>
+                <td>item_pic</td>
+                <td>varchar(300)</td>
+                <td></td>
+                <td>商品图片</td>
+              </tr>
+              
+              <tr>
+                <td>wangwang</td>
+                <td>varchar(100)</td>
+                <td>MUL</td>
+                <td>卖家</td>
+              </tr>
+              
+              <tr>
+                <td>source</td>
+                <td>varchar(50)</td>
+                <td></td>
+                <td>监控来源</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.user_keywords</h4>
+          <label class="label label-info">用户表-关键词配置表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>user</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>用户昵称</td>
+              </tr>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(50)</td>
+                <td>PRI</td>
+                <td>关键词</td>
+              </tr>
+              
+              <tr>
+                <td>min_price</td>
+                <td>float</td>
+                <td></td>
+                <td>最低价格</td>
+              </tr>
+              
+              <tr>
+                <td>max_price</td>
+                <td>float</td>
+                <td></td>
+                <td>最高价格</td>
+              </tr>
+              
+              <tr>
+                <td>location</td>
+                <td>varchar(200)</td>
+                <td></td>
+                <td>商品所在地区</td>
+              </tr>
+              
+              <tr>
+                <td>min_sale</td>
+                <td>float</td>
+                <td></td>
+                <td>最小销售额筛选</td>
+              </tr>
+              
+              <tr>
+                <td>status</td>
+                <td>varchar(5)</td>
+                <td>MUL</td>
+                <td>状态</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.user_keywords_ztc</h4>
+          <label class="label label-info">用户直通车监控配置</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>user</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>用户</td>
+              </tr>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(50)</td>
+                <td>PRI</td>
+                <td>关键词</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.user_privileges</h4>
+          <label class="label label-info">用户表-权限</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>user</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>用户昵称</td>
+              </tr>
+              
+              <tr>
+                <td>account_type</td>
+                <td>varchar(10)</td>
+                <td></td>
+                <td>账户类型（公共用户P、私人用户S，管理员A）</td>
+              </tr>
+              
+              <tr>
+                <td>level</td>
+                <td>varchar(5)</td>
+                <td>MUL</td>
+                <td>级别</td>
+              </tr>
+              
+              <tr>
+                <td>vip</td>
+                <td>int(11)</td>
+                <td>MUL</td>
+                <td>VIP级别</td>
+              </tr>
+              
+              <tr>
+                <td>cats_limit</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>自定义类目数量限制</td>
+              </tr>
+              
+              <tr>
+                <td>shop_limit</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>监控店铺数量限制</td>
+              </tr>
+              
+              <tr>
+                <td>item_limit</td>
+                <td>int(11)</td>
+                <td></td>
+                <td>监控商品数量限制</td>
+              </tr>
+              
+              <tr>
+                <td>ztc_limit</td>
+                <td>int(11)</td>
+                <td></td>
+                <td></td>
+              </tr>
+              
+              <tr>
+                <td>balance</td>
+                <td>float(10,2)</td>
+                <td></td>
+                <td>余额</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td>MUL</td>
+                <td>更新时间戳</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.user_shop_monitor</h4>
+          <label class="label label-info">用户-店铺监控表</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>user</td>
+                <td>varchar(20)</td>
+                <td>PRI</td>
+                <td>昵称</td>
+              </tr>
+              
+              <tr>
+                <td>shop_link</td>
+                <td>varchar(50)</td>
+                <td>PRI</td>
+                <td>店铺链接</td>
+              </tr>
+              
+              <tr>
+                <td>shop_name</td>
+                <td>varchar(100)</td>
+                <td></td>
+                <td>店铺名称</td>
+              </tr>
+              
+              <tr>
+                <td>user_num_id</td>
+                <td>varchar(30)</td>
+                <td></td>
+                <td>店铺用户ID</td>
+              </tr>
+              
+              <tr>
+                <td>population_tsmp</td>
+                <td>timestamp</td>
+                <td></td>
+                <td></td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          <h3>其他表</h3>
+          
+          <h4>ibbd2.v_get_cats</h4>
+          <label class="label label-info">VIEW</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>keyword</td>
+                <td>varchar(30)</td>
+                <td></td>
+                <td>类目</td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          
+          
+          <h4>ibbd2.v_verify_master_keywords_plan</h4>
+          <label class="label label-info">VIEW</label>
+          <table class="table table table-striped table-bordered">
+            <thead>
+              <th>字段</th>
+              <th>类型</th>
+              <th>索引类型</th>
+              <th>注释</th>
+            </thead>
+            <tbody>
+              
+              <tr>
+                <td>userdefined_keywords_num</td>
+                <td>varchar(24)</td>
+                <td></td>
+                <td></td>
+              </tr>
+              
+              <tr>
+                <td>COUNT(DISTINCT (keyword))</td>
+                <td>bigint(21)</td>
+                <td></td>
+                <td></td>
+              </tr>
+              
+              <tr>
+                <td>CURDATE()</td>
+                <td>date</td>
+                <td></td>
+                <td></td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+      </div>
+    </section>
+  </div>
+  <script type="text/javascript" src="help/js/jquery-1.8.3.min.js"></script>
+  <script type="text/javascript" src="help/js/jquery-ui-1.9.1.custom.min.js"></script>
+  <script type="text/javascript" src="help/bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="help/tocify/jquery.tocify.min.js"></script>
+  <script type="text/javascript">
+  $(function(){
+    $("#toc").tocify({ selectors: "h2, h3, h4, h5" }).data("tocify");
+  })
+  </script>
+</body>
+</html>

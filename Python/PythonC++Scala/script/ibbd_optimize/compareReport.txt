@@ -1,0 +1,7 @@
+ #在223.4.246.146上的模拟数据对比结果
+ select table_name,table_rows,data_length/1024,index_length/1024 from information_schema.tables where table_name='top_item_tradingtime';
++----------------------+------------+------------------+-------------------+
+| table_name           | table_rows | data_length/1024 | index_length/1024 |
++----------------------+------------+------------------+-------------------+
+| top_item_tradingtime |   25349720 |     2390016.0000 |      4704256.0000 |
++----------------------+------------+------------------+-------------------+
